@@ -1,3 +1,8 @@
+# 🏋️‍♂️ GymMatch.pl  
+🔗 **Live now at [https://gymmatch.pl](https://gymmatch.pl)**  
+The first Polish gym comparison platform — helping you find the best gym in Kraków 💪
+
+
 GymMatch - Kraków Gym Comparison Platform
 📋 Project Overview
 
