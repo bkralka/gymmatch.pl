@@ -1,0 +1,3694 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V73ZXDXG3F"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-V73ZXDXG3F');
+</script>
+
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GymMatch - Porównywarka Siłowni w Krakowie</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4361ee;
+      --primary-light: #4895ef;
+      --primary-lighter: #e6ebfd;
+      --secondary: #3a0ca3;
+      --dark: #1a1a2e;
+      --darker: #16213e;
+      --light: #f8f9fa;
+      --lighter: #f1f3f8;
+      --success: #4cc9f0;
+      --warning: #f72585;
+      --gray: #adb5bd;
+      --gray-light: #e9ecef;
+      --gray-dark: #495057;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+      --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --gold: #ffc107;
+      --gold-dark: #e0a800;
+      --multisport: #00a0e1;
+      --medicover: #e20074;
+      --pzu: #005baa;
+      --fitprofit: #ff6b00;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    
+    body {
+      background-color: var(--lighter);
+      color: var(--dark);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    
+    h1, h2, h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+    }
+    
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 24px;
+      width: 100%;
+    }
+    
+    header {
+      position: relative; /* To jest kluczowe dla ikon social media */
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 2.5rem 0;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow-md);
+    }
+    
+.header-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px; /* To chroni wyszukiwarkę przed dotykaniem boków */
+  position: relative;
+  z-index: 2;
+}
+    
+    h1 {
+      font-size: 2.75rem;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.5px;
+      margin-top: 2rem;
+    }
+    
+    .subtitle {
+      font-size: 1.15rem;
+      opacity: 0.92;
+      max-width: 700px;
+      margin-bottom: 1.75rem;
+      font-weight: 400;
+    }
+    
+    .stats {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .stat-card {
+      background-color: rgba(255, 255, 255, 0.15);
+      padding: 0.8rem 1.5rem;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      backdrop-filter: blur(5px);
+      font-weight: 500;
+    }
+    
+    .stat-card i {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+    
+    /* Filtry i wyszukiwanie */
+.filters {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    /* To wyśrodkuje Twoje selecty (dzielnice, typy, ocena) */
+    justify-content: center; 
+}
+    
+    .search-box {
+      flex: 1;
+      min-width: 250px;
+      position: relative;
+    }
+    
+    .search-box i {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gray);
+      font-size: 0.95rem;
+    }
+    
+    .search-box input {
+      width: 100%;
+      padding: 12px 20px 12px 45px;
+      border: 1px solid var(--gray-light);
+      border-radius: var(--radius-sm);
+      font-size: 0.95rem;
+      transition: all 0.2s;
+      font-weight: 400;
+    }
+    
+    .search-box input:focus {
+      border-color: var(--primary-light);
+      box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+      outline: none;
+    }
+    
+    select {
+      padding: 12px 15px;
+      border: 1px solid var(--gray-light);
+      border-radius: var(--radius-sm);
+      font-size: 0.95rem;
+      background-color: white;
+      min-width: 200px;
+      cursor: pointer;
+      font-weight: 400;
+      appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      background-size: 14px;
+    }
+    
+    select:focus {
+      border-color: var(--primary-light);
+      outline: none;
+    }
+    
+    .reset-btn {
+      background-color: var(--light);
+      color: var(--gray-dark);
+      border: none;
+      padding: 12px 20px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+    }
+    
+    .reset-btn:hover {
+      background-color: var(--gray-light);
+    }
+    
+    /* Status ładowania */
+    #data-status {
+      display: none;
+    }
+    
+    .gym-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
+      margin: 30px 0;
+    }
+    
+    .gym-card {
+      width: 100%;
+      min-width: 0;
+      background: white;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.3s, box-shadow 0.3s;
+      border: 1px solid var(--gray-light);
+      position: relative;
+    }
+    
+    .gym-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary-light);
+    }
+    
+    .gym-image {
+      height: 180px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+    
+    .gym-type {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: rgba(255,255,255,0.95);
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--darker);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+    
+    .gym-content {
+      padding: 20px;
+      position: relative;
+      padding-bottom: 60px;
+    }
+    
+    .gym-title {
+      font-size: 1.25rem;
+      margin-bottom: 10px;
+      color: var(--darker);
+      font-weight: 600;
+      line-height: 1.4;
+    }
+    
+    .gym-location {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      color: var(--gray-dark);
+      font-size: 0.9rem;
+      font-weight: 400;
+    }
+    
+    .gym-location i {
+      margin-right: 8px;
+      color: var(--primary);
+      font-size: 0.95rem;
+    }
+    
+    .gym-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin: 20px 0;
+    }
+    
+    .stat {
+      display: flex;
+      align-items: center;
+      font-size: 0.9rem;
+      color: var(--gray-dark);
+      white-space: nowrap;
+    }
+    
+    .stat i {
+      width: 28px;
+      height: 28px;
+      background: var(--primary-lighter);
+      color: var(--primary);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10px;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+    
+    .gym-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary);
+      color: white;
+      padding: 10px 18px;
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+      font-weight: 500;
+      margin-top: 10px;
+      white-space: nowrap;
+    }
+    
+    .gym-link:hover {
+      background: var(--secondary);
+      transform: translateY(-1px);
+    }
+
+    /* Nowy kontener na przyciski */
+    .gym-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+      align-items: center;
+    }
+
+    /* Przycisk odwiedź stronę */
+    .gym-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary);
+      color: white;
+      padding: 10px 18px;
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+      font-weight: 500;
+      margin-top: 0;
+      flex-grow: 1;
+      justify-content: center;
+    }
+
+    /* Przycisk opinii */
+    .review-link {
+      padding: 10px 18px;
+      height: 42.5px;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .review-link:hover {
+      background: var(--gold-dark);
+      transform: translateY(-1px);
+    }
+    
+    .review-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--gold);
+      color: var(--darker);
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: background 0.2s, transform 0.2s;
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .review-link:hover {
+      background: var(--gold-dark);
+      transform: translateY(-1px);
+    }
+    
+    /* Checkboxy */
+    .filter-checkboxes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1rem;
+      width: 100%;
+    }
+    
+    .checkbox-container {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+    }
+    
+    .custom-checkbox {
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--gray);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    
+    .custom-checkbox.checked {
+      background-color: var(--primary);
+      border-color: var(--primary);
+    }
+    
+    .custom-checkbox.checked::after {
+      content: '✓';
+      color: white;
+      font-size: 0.7rem;
+    }
+    
+    .checkbox-label {
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 400;
+      user-select: none;
+    }
+    
+    /* Paginacja */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin: 2.5rem 0;
+    }
+    
+    .page-btn {
+      padding: 10px 15px;
+      border: 1px solid var(--gray-light);
+      background-color: white;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s;
+      min-width: 40px;
+      text-align: center;
+      font-weight: 500;
+      color: var(--gray-dark);
+    }
+    
+    .page-btn:hover {
+      background-color: var(--gray-light);
+    }
+    
+    .page-btn.active {
+      background-color: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+    
+    .page-btn.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      background-color: var(--gray-light);
+    }
+
+    /* Style dla pakietów sportowych */
+    .package-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 0rem;
+      width: 100%;
+      padding: 25px 0;
+      border-top: 1px solid var(--gray-light);
+    }
+
+    
+
+    .package-filter {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+    }
+
+    .package-checkbox {
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--gray);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .package-checkbox.checked {
+      border-color: var(--primary);
+      background-color: var(--primary);
+    }
+
+    .package-checkbox.checked::after {
+      content: '✓';
+      color: white;
+      font-size: 0.7rem;
+    }
+
+    .package-label {
+      font-size: 0.9rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .package-icon {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .multisport-icon { background-color: var(--multisport); }
+    .medicover-icon { background-color: var(--medicover); }
+    .pzu-icon { background-color: var(--pzu); }
+    .fitprofit-icon { background-color: var(--fitprofit); }
+
+    .gym-packages {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    .gym-package {
+      background: var(--primary-lighter);
+      color: var(--primary);
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+
+    .gym-package.multisport { background: rgba(0, 160, 225, 0.1); color: var(--multisport); }
+    .gym-package.medicover { background: rgba(226, 0, 116, 0.1); color: var(--medicover); }
+    .gym-package.pzu { background: rgba(0, 91, 170, 0.1); color: var(--pzu); }
+    .gym-package.fitprofit { background: rgba(255, 107, 0, 0.1); color: var(--fitprofit); }
+
+    .gym-package i {
+      font-size: 0.7rem;
+    }
+
+    /* Sekcja udogodnień */
+    .amenities-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: -1rem;
+      width: 100%;
+      padding: 25px 0;
+      border-top: 1px solid var(--gray-light);
+      margin-bottom: -25px;
+     
+    }
+
+    .amenity-filter {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+    }
+
+    .amenity-checkbox {
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--gray);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .amenity-checkbox.checked {
+      border-color: var(--primary);
+      background-color: var(--primary);
+    }
+
+    .amenity-checkbox.checked::after {
+      content: '✓';
+      color: white;
+      font-size: 0.7rem;
+    }
+
+    .amenity-label {
+      font-size: 0.9rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .amenity-icon {
+      color: var(--primary);
+      font-size: 0.9rem;
+      width: 18px;
+      text-align: center;
+    }
+
+    .gym-amenities {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .gym-amenity {
+      background: var(--primary-lighter);
+      color: var(--primary);
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .gym-amenity i {
+      font-size: 0.7rem;
+    }
+
+    /* Style dla filtrów cenowych */
+.price-filters {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap; /* Zmiana z wrap na nowrap */
+  margin-top: 10px;
+  width: 100%;
+  overflow-x: auto; /* Dodanie poziomego przewijania */
+  padding-bottom: 8px; /* Miejsce na pasek przewijania */
+  -webkit-overflow-scrolling: touch; /* Płynne przewijanie na iOS */
+  border-top: 1px solid var(--gray-light); /* Szara linia nad filtrami cenowymi */
+  padding-top: 15px; /* Odstęp nad linią */
+  margin-top: 10px; /* Odstęp po udogodnieniach */
+  
+}
+
+/* Nowe style dla filtrów cenowych */
+.price-filters {
+  display: flex;
+  flex-wrap: wrap; /* Zmiana na wrap */
+  gap: 8px;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.price-filter {
+  flex: 1 1 calc(50% - 8px); /* Dwa pola w rzędzie */
+  min-width: 0; /* Zapobiega "uciekaniu" poza kontener */
+  box-sizing: border-box;
+}
+
+.price-filter label {
+  display: block;
+  font-size: 0.7rem; /* Mniejsza czcionka etykiety */
+  font-weight: 600;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.price-filter input {
+  width: 100%;
+  padding: 6px 8px;
+  font-size: 0.8rem;
+  border: 1px solid #dcdfe6;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* Dla nieco szerszych ekranów (powyżej 400px) */
+@media (min-width: 400px) {
+  .price-filter {
+    flex: 1 1 calc(33.333% - 8px); /* Trzy pola w rzędzie */
+  }
+}
+
+/* Dla tabletów i większych ekranów */
+@media (min-width: 768px) {
+  .price-filters {
+    flex-wrap: nowrap; /* Jedna linia */
+  }
+  
+  .price-filter {
+    flex: 1;
+  }
+  
+  .price-filter label {
+    font-size: 0.75rem;
+  }
+  
+  .price-filter input {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+}
+
+.price-filter label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap; /* Zapobiega zawijaniu etykiet */
+}
+
+.price-filter input {
+  padding: 8px;
+  border: 1px solid #dcdfe6;
+  border-radius: 6px;
+  width: 100%;
+}
+
+/* Responsywność dla mniejszych ekranów */
+@media (max-width: 768px) {
+  .price-filters {
+    gap: 8px; /* Mniejszy odstęp między polami */
+    padding-bottom: 12px; /* Więcej miejsca na pasek przewijania */
+  }
+  
+  .price-filter {
+    min-width: 100px; /* Mniejsza minimalna szerokość */
+  }
+  
+  .price-filter input {
+    padding: 6px; /* Mniejszy padding */
+    font-size: 0.8rem; /* Mniejsza czcionka */
+  }
+  
+  .price-filter label {
+    font-size: 0.7rem; /* Mniejsza czcionka etykiety */
+  }
+}
+
+    /* Przycisk porównania */
+    .compare-btn {
+      background-color: var(--primary-lighter);
+      color: var(--primary);
+      border: none;
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+    }
+    
+    .compare-btn:hover {
+      background-color: var(--primary-light);
+      color: white;
+    }
+    
+    .compare-btn.active {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    /* Przycisk otwarcia modala porównania */
+    .open-compare-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      font-weight: 600;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      z-index: 90;
+      transition: all 0.3s;
+    }
+    
+    .open-compare-btn:hover {
+      background-color: var(--secondary);
+      transform: translateY(-2px);
+    }
+    
+    .open-compare-btn .badge {
+      background-color: var(--warning);
+      color: white;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+    }
+
+    /* Modal porównania */
+    .modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+    }
+    
+    .modal-backdrop.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .compare-modal {
+      background-color: white;
+      border-radius: var(--radius-md);
+      width: 90%;
+      max-width: 1200px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 2rem;
+      position: relative;
+      transform: translateY(20px);
+      transition: transform 0.3s;
+    }
+    
+    .modal-backdrop.active .compare-modal {
+      transform: translateY(0);
+    }
+    
+    .close-modal {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--gray-dark);
+    }
+    
+    .compare-container {
+      display: grid;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    
+    .compare-header {
+      display: grid;
+      grid-template-columns: 200px repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      font-weight: 600;
+      border-bottom: 1px solid var(--gray-light);
+      padding-bottom: 0.5rem;
+      position: sticky;
+      top: 0;
+      background-color: white;
+      z-index: 1;
+    }
+    
+    .compare-row {
+      display: grid;
+      grid-template-columns: 200px repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      align-items: center;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--gray-light);
+    }
+    
+    .compare-gym {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    
+    .compare-gym-image {
+      width: 100px;
+      height: 80px;
+      background-size: cover;
+      background-position: center;
+      border-radius: var(--radius-sm);
+      margin-bottom: 0.5rem;
+    }
+    
+    .clear-comparison {
+      background-color: var(--light);
+      color: var(--gray-dark);
+      border: none;
+      padding: 10px 15px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+    }
+    
+    .clear-comparison:hover {
+      background-color: var(--gray-light);
+    }
+    
+    .compare-btn {
+      position: relative;
+      background-color: var(--primary-lighter);
+      color: var(--primary);
+      border: none;
+      padding: 12px 12px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0rem;
+      font-size: 0.95rem;
+      min-width: 38px;
+      min-height: 38px;
+    }
+
+    .compare-btn .compare-btn-label {
+      opacity: 0;
+      max-width: 0;
+      margin-left: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      transition: max-width 0.18s, opacity 0.18s, margin-left 0.18s;
+      pointer-events: none;
+      font-size: 0.98em;
+    }
+
+    .compare-btn:hover .compare-btn-label,
+    .compare-btn:focus .compare-btn-label {
+      opacity: 1;
+      max-width: 90px;
+      margin-left: 8px;
+      pointer-events: auto;
+    }
+
+    .compare-btn.active {
+      background-color: var(--primary);
+      color: #fff;
+    }
+
+    @media (max-width: 900px) {
+      .compare-btn .compare-btn-label {
+        display: none !important;
+      }
+    }
+
+    /* Nowe style dla boxów porównania na desktop */
+    .compare-boxes {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .compare-box {
+      background: white;
+      border-radius: var(--radius-md);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--gray-light);
+    }
+
+    .compare-box-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid var(--gray-light);
+    }
+
+    .compare-box-image {
+      width: 80px;
+      height: 60px;
+      border-radius: var(--radius-sm);
+      background-size: cover;
+      background-position: center;
+      margin-right: 15px;
+    }
+
+    .compare-box-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .compare-box-type {
+      font-size: 0.85rem;
+      color: var(--gray-dark);
+      margin-top: 3px;
+    }
+
+    .compare-box-details {
+      font-size: 0.9rem;
+    }
+
+    .compare-box-detail {
+      margin-bottom: 8px;
+      display: flex;
+    }
+
+    .compare-box-detail i {
+      width: 24px;
+      color: var(--primary);
+      font-size: 0.9rem;
+    }
+
+    .compare-box-detail span {
+      flex: 1;
+    }
+
+    .compare-box-packages {
+      margin-top: 15px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .compare-box-package {
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-weight: 600;
+    }
+
+    .compare-box-amenities {
+      margin-top: 15px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .compare-box-amenity {
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: 12px;
+      background: var(--primary-lighter);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Style dla sekcji cen w modalu porównania */
+.compare-box-prices {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--gray-light);
+}
+
+.compare-box-price-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  font-size: 0.85rem;
+}
+
+.compare-box-price-name {
+  font-weight: 500;
+  color: var(--dark);
+}
+
+.compare-box-price-value {
+  font-weight: 600;
+  color: var(--primary);
+}
+
+
+    /* Style dla sekcji cen karnetów */
+    .gym-pricing {
+      margin-top: 15px;
+      border-top: 1px solid var(--gray-light);
+      padding-top: 15px;
+    }
+
+    .pricing-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--gray-dark);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+
+    .pricing-title i {
+      color: var(--primary);
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .pricing-item {
+      background: var(--lighter);
+      border-radius: var(--radius-sm);
+      padding: 8px;
+      font-size: 0.8rem;
+    }
+
+    .pricing-name {
+      font-weight: 500;
+      color: var(--dark);
+      margin-bottom: 3px;
+    }
+
+    .pricing-price {
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .pricing-note {
+      font-size: 0.7rem;
+      color: var(--gray-dark);
+      margin-top: 5px;
+      line-height: 1.3;
+    }
+
+    /* Modal z cenami */
+    .pricing-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+    }
+
+    .pricing-modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .pricing-modal-content {
+      background: white;
+      border-radius: var(--radius-md);
+      width: 90%;
+      max-width: 500px;
+      max-height: 80vh;
+      overflow-y: auto;
+      padding: 25px;
+      position: relative;
+    }
+
+    .pricing-modal-title {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+      color: var(--dark);
+    }
+
+    .pricing-modal-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .pricing-modal-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      border-bottom: 1px solid var(--gray-light);
+    }
+
+    .pricing-modal-name {
+      font-weight: 500;
+    }
+
+    .pricing-modal-price {
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .pricing-modal-note {
+      font-size: 0.8rem;
+      color: var(--gray-dark);
+      margin-top: 15px;
+      font-style: italic;
+    }
+
+    /* Responsywność */
+    @media (max-width: 1200px) {
+      .filters {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .search-box, select {
+        min-width: 100%;
+      }
+      
+      h1 {
+        font-size: 2.25rem;
+      }
+      
+      .header {
+        padding: 1.75rem 0;
+      }
+      
+      .gym-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .package-filters, .amenities-filters {
+        flex-direction: row;
+        align-items: flex-start;
+      }
+      
+      .compare-header,
+      .compare-row {
+        grid-template-columns: 150px repeat(auto-fit, minmax(120px, 1fr));
+      }
+      
+      .compare-modal {
+        width: 95%;
+        padding: 1.5rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .gym-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .compare-header,
+      .compare-row {
+        grid-template-columns: 100px repeat(auto-fit, minmax(100px, 1fr));
+        font-size: 0.85rem;
+      }
+      
+      .compare-gym-image {
+        width: 80px;
+        height: 60px;
+      }
+      
+      .open-compare-btn {
+        bottom: 20px;
+        right: 20px;
+        padding: 10px 15px;
+        font-size: 0.9rem;
+      }
+
+      .pricing-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    /* Animacje */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .gym-card {
+      animation: fadeIn 0.4s ease-out forwards;
+      opacity: 0;
+      width: 100%;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Nowe style dla filtra opinii */
+    .rating-filter {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .rating-filter select {
+      min-width: 120px;
+    }
+
+    .rating-filter label {
+      font-size: 0.95rem;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 900px) {
+      .compare-header, .compare-row {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        width: 100%;
+        gap: 0.5rem;
+      }
+      .compare-header > div,
+      .compare-row > div {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        white-space: normal;
+        overflow: visible;
+        text-overflow: initial;
+        border-bottom: none;
+        padding: 8px 0;
+      }
+      .compare-header > div:not(:first-child),
+      .compare-row > div:not(:first-child) {
+        border-top: 1px solid #f0f0f0;
+        margin-top: 6px;
+        padding-top: 8px;
+      }
+    }
+
+    /* MODAL ZGŁOSZENIA BŁĘDU */
+    .report-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+    }
+
+    .report-modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .report-modal-content {
+      background: white;
+      border-radius: var(--radius-md);
+      width: 90%;
+      max-width: 500px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 25px;
+      position: relative;
+    }
+
+    .report-modal-title {
+      font-size: 1.25rem;
+      margin-bottom: 1.5rem;
+      color: var(--dark);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .report-modal-title i {
+      color: var(--warning);
+    }
+
+    .report-form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-group label {
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      padding: 12px 15px;
+      border: 1px solid var(--gray-light);
+      border-radius: var(--radius-sm);
+      font-size: 0.95rem;
+      transition: all 0.2s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: var(--primary-light);
+      box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+      outline: none;
+    }
+
+    .form-group textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-top: 10px;
+    }
+
+    .cancel-btn {
+      background-color: var(--light);
+      color: var(--gray-dark);
+      border: none;
+      padding: 12px 20px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .cancel-btn:hover {
+      background-color: var(--gray-light);
+    }
+
+    .submit-btn {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .submit-btn:hover {
+      background-color: var(--secondary);
+    }
+
+    .submit-btn:disabled {
+      background-color: var(--gray);
+      cursor: not-allowed;
+    }
+
+    .report-success {
+      text-align: center;
+      padding: 20px;
+    }
+
+    .report-success i {
+      font-size: 3rem;
+      color: var(--success);
+      margin-bottom: 15px;
+    }
+
+    .report-success h3 {
+      margin-bottom: 10px;
+      color: var(--dark);
+    }
+
+    .report-success p {
+      color: var(--gray-dark);
+      margin-bottom: 20px;
+    }
+
+    /* Responsywność */
+    @media (max-width: 1200px) {
+      .filters {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .search-box, select {
+        min-width: 100%;
+      }
+      
+      h1 {
+        font-size: 2.25rem;
+      }
+      
+      .gym-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .package-filters, .amenities-filters {
+        flex-direction: row;
+        align-items: flex-start;
+      }
+      
+      .compare-header,
+      .compare-row {
+        grid-template-columns: 150px repeat(auto-fit, minmax(120px, 1fr));
+      }
+      
+      .compare-modal {
+        width: 95%;
+        padding: 1.5rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .gym-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .compare-header,
+      .compare-row {
+        grid-template-columns: 100px repeat(auto-fit, minmax(100px, 1fr));
+        font-size: 0.85rem;
+      }
+      
+      .compare-gym-image {
+        width: 80px;
+        height: 60px;
+      }
+      
+      .open-compare-btn {
+        bottom: 20px;
+        right: 20px;
+        padding: 10px 15px;
+        font-size: 0.9rem;
+      }
+
+      .pricing-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .gym-actions {
+        flex-wrap: wrap;
+      }
+    }
+    
+    /* Animacje */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .gym-card {
+      animation: fadeIn 0.4s ease-out forwards;
+      opacity: 0;
+      width: 100%;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Nowe style dla filtra opinii */
+    .rating-filter {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .rating-filter select {
+      min-width: 120px;
+    }
+
+    .rating-filter label {
+      font-size: 0.95rem;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 900px) {
+      .compare-header, .compare-row {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        width: 100%;
+        gap: 0.5rem;
+      }
+      .compare-header > div,
+      .compare-row > div {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        white-space: normal;
+        overflow: visible;
+        text-overflow: initial;
+        border-bottom: none;
+        padding: 8px 0;
+      }
+      .compare-header > div:not(:first-child),
+      .compare-row > div:not(:first-child) {
+        border-top: 1px solid #f0f0f0;
+        margin-top: 6px;
+        padding-top: 8px;
+      }
+    }
+
+    /* STOPKA */
+    footer {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 3rem 0 2rem;
+      margin-top: 4rem;
+    }
+
+    .footer-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .footer-bottom {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      width: 100%;
+    }
+
+    /* Przycisk zgłoszenia w stopce */
+    .report-footer-btn {
+      background-color: var(--warning);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .report-footer-btn:hover {
+      background-color: #e01a6c;
+      transform: translateY(-2px);
+    }
+
+    /* Responsywność stopki */
+    @media (max-width: 768px) {
+      .report-footer-btn {
+        margin-top: 1.5rem;
+      }
+    }
+
+/* Nowe style dla FAQ */
+.faq-section {
+  margin-top: 3rem;
+  text-align: left;
+  max-width: 800px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  padding: 2rem;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.faq-section h3 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 1.5rem;
+  color: white;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.faq-section h3::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: var(--primary-light);
+  border-radius: 2px;
+}
+
+.faq-item {
+  margin-bottom: 1rem;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.faq-question {
+  width: 100%;
+  background: none;
+  border: none;
+  color: white;
+  text-align: left;
+  font-size: 1.05rem;
+  font-weight: 600;
+  padding: 1.25rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.faq-question:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.faq-question i {
+  transition: transform 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.faq-question.active i {
+  transform: rotate(180deg);
+}
+
+.faq-answer {
+  display: none;
+  padding: 0 1.25rem 1.25rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.faq-answer p {
+  margin: 0;
+}
+
+/* Animacja dla odpowiedzi FAQ */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+.close-modal {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 1.8rem;
+  color: var(--gray-dark);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.close-modal:hover {
+  color: var(--primary);
+}
+
+@media (max-width: 768px) {
+  .gym-actions {
+    flex-wrap: nowrap !important; /* przyciski w jednej linii */
+    white-space: nowrap;          /* żadnego zawijania */
+    overflow-x: auto;             /* jeśli się nie mieści, doda scroll w poziomie */
+  }
+
+  .gym-actions a,
+  .gym-actions button {
+    flex: 0 0 auto;  /* każdy przycisk ma swoją szerokość, nie ściska się */
+  }
+}
+
+
+
+/* Style dla ikon social media w headerze - kwadratowe ze ściętymi rogami */
+.header-social {
+  position: absolute; /* Ikony będą "lewitować" nad tłem */
+  top: 20px;          /* Odstęp od góry strony */
+  right: 20px;         /* Odstęp od prawej krawędzi strony */
+  display: flex;
+  gap: 12px;
+  z-index: 10;        /* Wyższa warstwa, żeby nic ich nie przykryło */
+}
+
+.social-btn {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.3rem;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.15);
+  width: 45px;
+  height: 45px;
+  border-radius: var(--radius-md); /* Użyje Twojego radius-md (10px) */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  text-decoration: none;
+}
+
+.social-btn:hover {
+  color: white;
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: var(--shadow-md); /* Użyje Twojego shadow-md */
+}
+
+/* Responsywność dla mniejszych ekranów */
+@media (max-width: 768px) {
+  .header-social {
+    top: 10px;
+    right: 15px;
+    gap: 10px;
+  }
+  
+  .social-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1.1rem;
+  }
+}
+
+/* Dodatkowe style dla konkretnych ikon jeśli chcesz */
+.social-btn:nth-child(1) { /* Instagram */
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.social-btn:nth-child(2) { /* TikTok */
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.social-btn:hover:nth-child(1) { /* Instagram hover */
+  color: #e1306c; /* Kolor Instagrama */
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.social-btn:hover:nth-child(2) { /* TikTok hover */
+  color: #000000; /* Czarny kolor TikToka */
+  background: rgba(255, 255, 255, 0.9);
+}
+
+/* --- STYLE DLA WYRÓŻNIONEJ SIŁOWNI (CITYFIT) --- */
+
+/* 1. Złota obramówka i poświata */
+.gym-card.featured-gym {
+  border: 2px solid var(--gold);
+  box-shadow: 0 0 20px rgba(255, 193, 7, 0.25); /* Złota poświata */
+  transform: translateY(-5px); /* Lekkie uniesienie na start */
+  z-index: 2; /* Żeby była wyżej niż inne */
+}
+
+/* Efekt po najechaniu na wyróżnioną */
+.gym-card.featured-gym:hover {
+  box-shadow: 0 0 30px rgba(255, 193, 7, 0.4);
+  border-color: var(--gold-dark);
+}
+
+/* 2. Odznaka "Polecane" w lewym górnym rogu */
+.featured-badge {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: #fff;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+/* Nowoczesna pinezka na mapie */
+    .custom-div-icon {
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      border: 2px solid white;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+      display: flex !important; /* Ważne dla centrowania */
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      transition: transform 0.2s ease, background 0.2s;
+    }
+    
+    .custom-div-icon:hover {
+      transform: scale(1.15); /* Lekkie powiększenie po najechaniu */
+      background: var(--secondary);
+      z-index: 1000 !important;
+    }
+
+    /* Styl dymka po najechaniu (Tooltip) */
+    .gym-tooltip {
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid var(--primary-light);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      border-radius: 4px;
+      padding: 2px 8px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--dark);
+    }
+
+    .locate-control {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000; /* Musi być nad mapą */
+      background: white;
+      border: none;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%; /* Kółeczko */
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      cursor: pointer;
+      color: var(--gray-dark);
+      font-size: 1.2rem;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .locate-control:hover {
+      background: var(--primary);
+      color: white;
+      transform: scale(1.1);
+    }
+    
+    /* Pulsująca kropka użytkownika na mapie */
+    .user-location-marker {
+      width: 20px;
+      height: 20px;
+      background: #4285F4;
+      border: 3px solid white;
+      border-radius: 50%;
+      box-shadow: 0 0 0 15px rgba(66, 133, 244, 0.2);
+    }
+
+
+    /* Nowy styl dla wyszukiwarki w nagłówku */
+.hero-search-wrapper {
+  position: relative;
+  max-width: 600px;
+  width: 100%;
+  margin: 1.5rem 0 2.5rem; /* Odstępy od tekstu i statystyk */
+}
+
+.hero-search-input {
+  width: 100%;
+  padding: 16px 20px 16px 50px; /* Miejsce na ikonę lupy */
+  border-radius: 50px; /* Kształt pastylki */
+  border: none;
+  font-size: 1.05rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* Lekki cień */
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.hero-search-input:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.hero-search-icon {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--primary);
+  font-size: 1.1rem;
+  pointer-events: none; /* Żeby kliknięcie w ikonę aktywowało input */
+}
+
+/* Poprawka dla kontenera filtrów po usunięciu starej wyszukiwarki */
+.filters {
+  justify-content: center; /* Wyśrodkowanie pozostałych filtrów */
+}
+
+
+  </style>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+  
+  <style>
+    /* Style dla przełącznika widoku */
+    .view-toggle {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    .view-btn {
+      background: white;
+      border: 1px solid var(--gray-light);
+      padding: 10px 20px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s;
+      color: var(--gray-dark);
+    }
+
+    .view-btn:first-child {
+      border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+      border-right: none;
+    }
+
+    .view-btn:last-child {
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    }
+
+    .view-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    #map-container {
+      height: 600px;
+      width: 100%;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--gray-light);
+      margin-bottom: 30px;
+      display: none;
+      z-index: 1;
+      
+      /* --- DODAJ TĘ LINIJKĘ KONIECZNIE: --- */
+      position: relative; 
+    }
+
+    #gym-map {
+      height: 100%;
+      width: 100%;
+    }
+
+    /* Dostosowanie popupów na mapie */
+    .leaflet-popup-content-wrapper {
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-md);
+    }
+    
+    .map-popup-title {
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 5px;
+      font-size: 1.1em;
+    }
+    
+    /* Znajdź i podmień to w sekcji <style> */
+    .map-popup-btn {
+      display: inline-block;
+      margin-top: 10px;
+      background-color: #4361ee; /* Wyraźny niebieski kolor tła */
+      color: #ffffff !important; /* Wymuszony biały kolor tekstu */
+      padding: 6px 14px;
+      border-radius: 20px; /* Nowoczesne zaokrąglenie */
+      text-decoration: none;
+      font-size: 0.85em;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      transition: background-color 0.2s ease;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    /* Dodaj też efekt najechania myszką */
+    .map-popup-btn:hover {
+      background-color: #304ffe; /* Ciemniejszy niebieski po najechaniu */
+      color: #ffffff !important;
+      text-decoration: none;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+  </style>
+  
+</head>
+<body>
+
+  <header>
+    
+<div class="header-social">
+        <a href="https://www.instagram.com/gymmatch.pl/" target="_blank" class="social-btn">
+            <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.tiktok.com/@gymmatch.pl" target="_blank" class="social-btn">
+            <i class="fab fa-tiktok"></i>
+        </a>
+    </div>
+
+    <div class="container header-content">
+        <h1><i class="fas fa-dumbbell"></i> GymMatch</h1>
+        <p class="subtitle">Znajdź idealną siłownię w Krakowie dopasowaną do Twoich potrzeb i preferencji</p>
+        
+        <div class="hero-search-wrapper">
+            <i class="fas fa-search hero-search-icon"></i>
+            <input type="text" id="search" class="hero-search-input" placeholder="Wpisz nazwę siłowni, ulicę lub dzielnicę...">
+        </div>
+
+        <div class="stats">
+    <div class="stat-card">
+      <i class="fas fa-building"></i>
+      <span id="total-gyms">0</span> obiektów
+    </div>
+    <div class="stat-card">
+      <i class="fas fa-map-marker-alt"></i>
+      <span id="total-areas">0</span> dzielnic
+    </div>
+    <div class="stat-card">
+      <i class="fas fa-id-card"></i>
+      <span id="multisport-count">0</span> z Multisport
+    </div>
+  </div>
+</div>
+  </header>
+  
+  
+  <main class="container">
+<section class="filters">
+  <select id="filter-district">
+    <option value="">Wszystkie dzielnice</option>
+  </select>
+  
+  <select id="filter-type">
+    <option value="">Wszystkie typy</option>
+  </select>
+
+  <div class="rating-filter">
+    <label for="filter-rating"><i class="fas fa-star"></i> Ocena:</label>
+    <select id="filter-rating">
+      <option value="">Wszystkie</option>
+      <option value="4.5">+4.5 ★</option>
+      <option value="4.0">+4.0 ★</option>
+      <option value="3.5">+3.5 ★</option>
+      <option value="3.0">+3.0 ★</option>
+    </select>
+  </div>
+
+      <!-- Filtry pakietów sportowych -->
+      <div class="package-filters">
+        <div class="package-filter" id="filter-multisport">
+          <div class="package-checkbox"></div>
+          <span class="package-label">
+            <span class="package-icon multisport-icon"></span>
+            Multisport
+          </span>
+        </div>
+        <div class="package-filter" id="filter-medicover">
+          <div class="package-checkbox"></div>
+          <span class="package-label">
+            <span class="package-icon medicover-icon"></span>
+            Medicover
+          </span>
+        </div>
+        <div class="package-filter" id="filter-pzu">
+          <div class="package-checkbox"></div>
+          <span class="package-label">
+            <span class="package-icon pzu-icon"></span>
+            PZU Sport
+          </span>
+        </div>
+        <div class="package-filter" id="filter-fitprofit">
+          <div class="package-checkbox"></div>
+          <span class="package-label">
+            <span class="package-icon fitprofit-icon"></span>
+            FitProfit
+          </span>
+        </div>
+      </div>
+
+      <!-- Filtry udogodnień -->
+      <div class="amenities-filters">
+        <div class="amenity-filter" id="filter-parking">
+          <div class="amenity-checkbox"></div>
+          <span class="amenity-label">
+            <i class="fas fa-parking amenity-icon"></i>
+            Parking
+          </span>
+        </div>
+        <div class="amenity-filter" id="filter-sauna">
+          <div class="amenity-checkbox"></div>
+          <span class="amenity-label">
+            <i class="fas fa-temperature-high amenity-icon"></i>
+            Sauna
+          </span>
+        </div>
+        <div class="amenity-filter" id="filter-machines">
+          <div class="amenity-checkbox"></div>
+          <span class="amenity-label">
+            <i class="fas fa-blender amenity-icon"></i>
+            Fit Bar
+          </span>
+        </div>
+        <div class="amenity-filter" id="filter-wifi">
+          <div class="amenity-checkbox"></div>
+          <span class="amenity-label">
+            <i class="fas fa-wifi amenity-icon"></i>
+            WiFi
+          </span>
+        </div>
+        <div class="amenity-filter" id="filter-open24h">
+          <div class="amenity-checkbox"></div>
+          <span class="amenity-label">
+            <i class="fas fa-clock amenity-icon"></i>
+            24/7
+          </span>
+        </div>
+        <div class="amenity-filter" id="filter-pool">
+          <div class="amenity-checkbox"></div>
+          <span class="amenity-label">
+            <i class="fas fa-swimming-pool amenity-icon"></i>
+            Basen
+          </span>
+        </div>
+        <div class="amenity-filter" id="filter-groupClasses">
+          <div class="amenity-checkbox"></div>
+          <span class="amenity-label">
+            <i class="fas fa-users amenity-icon"></i>
+            Zajęcia grupowe
+          </span>
+        </div>
+        <div class="amenity-filter" id="filter-jacuzzi">
+          <div class="amenity-checkbox"></div>
+          <span class="amenity-label">
+            <i class="fas fa-hot-tub amenity-icon"></i>
+            Jacuzzi
+          </span>
+        </div>
+      </div>
+
+<!-- Filtry cenowe karnetów -->
+<div class="price-filters">
+  <div class="price-filter">
+    <label for="price-monthly-max">Miesięczny ≤</label>
+    <input type="number" id="price-monthly-max" placeholder="max zł" min="0">
+  </div>
+  <div class="price-filter">
+    <label for="price-6m-max">6-miesięczny ≤</label>
+    <input type="number" id="price-6m-max" placeholder="max zł" min="0">
+  </div>
+  <div class="price-filter">
+    <label for="price-yearly-max">12-miesięczny ≤</label>
+    <input type="number" id="price-yearly-max" placeholder="max zł" min="0">
+  </div>
+  <div class="price-filter">
+    <label for="price-single-max">Wejściówka ≤</label>
+    <input type="number" id="price-single-max" placeholder="max zł" min="0">
+  </div>
+</div>
+
+
+<button id="reset-filters" class="reset-btn">
+  <i class="fas fa-undo"></i> Wyczyść filtry
+</button>
+
+   </section>
+
+    <div class="view-toggle">
+      <button class="view-btn active" id="view-list-btn" onclick="switchView('list')">
+        <i class="fas fa-list"></i> Lista
+      </button>
+      <button class="view-btn" id="view-map-btn" onclick="switchView('map')">
+        <i class="fas fa-map-marked-alt"></i> Mapa
+      </button>
+    </div>
+
+    <div id="map-container">
+      <div id="gym-map"></div>
+      <button id="locate-btn" class="locate-control" onclick="locateUser()" title="Pokaż moją lokalizację">
+        <i class="fas fa-crosshairs"></i>
+      </button>
+    </div>
+    <div id="data-status" style="display: none;"></div>
+    
+    <section class="gym-grid" id="gym-container"></section>
+    
+    <div class="pagination" id="pagination"></div>
+  </main>
+
+  <!-- Przycisk otwarcia modala porównania -->
+  <button id="open-compare-btn" class="open-compare-btn" style="display: none;">
+    <i class="fas fa-balance-scale"></i>
+    <span>Porównaj</span>
+    <span class="badge" id="compare-count">0</span>
+  </button>
+
+  <!-- Modal porównania -->
+  <div class="modal-backdrop" id="compare-modal">
+    <div class="compare-modal">
+      <button class="close-modal" id="close-modal">&times;</button>
+      <h2><i class="fas fa-balance-scale"></i> Porównanie siłowni</h2>
+      <div class="compare-container" id="compare-container"></div>
+      <button id="clear-comparison" class="clear-comparison">
+        <i class="fas fa-trash"></i> Wyczyść porównanie
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal z cenami -->
+  <div class="pricing-modal" id="pricing-modal">
+    <div class="pricing-modal-content">
+      <button class="close-modal" id="close-pricing-modal">&times;</button>
+      <h3 class="pricing-modal-title">Cennik</h3>
+      <div class="pricing-modal-list" id="pricing-modal-list"></div>
+      <p class="pricing-modal-note" id="pricing-modal-note">Ceny mogą ulec zmianie, sprawdź aktualny cennik na stronie siłowni.</p>
+    </div>
+  </div>
+
+  <!-- STOPKA -->
+<footer>
+  <div class="container footer-content">
+
+     <!-- NOWA SEKCJA WSPÓŁPRACY -->
+     <div class="collaboration-section" style="margin-bottom: 2rem; text-align: center; padding: 2rem; background: rgba(255,255,255,0.1); border-radius: var(--radius-md);">
+      <h3 style="margin-bottom: 1rem; color: white; font-size: 1.5rem;">Współpraca</h3>
+      <p style="color: rgba(255,255,255,0.9); margin-bottom: 1rem; line-height: 1.6;">
+        Chcesz, żeby Twoja siłownia wyróżniała się w GymMatch?<br>
+        Masz pomysł na współpracę?
+      </p>
+      <a href="mailto:gymmatch.pl@gmail.com" style="display: inline-block; background: white; color: var(--primary); padding: 12px 25px; border-radius: var(--radius-md); text-decoration: none; font-weight: 600; transition: all 0.3s;">
+        <i class="fas fa-envelope" style="margin-right: 8px;"></i> Napisz do nas: gymmatch.pl@gmail.com
+      </a>
+    </div>
+    <!-- KONIEC SEKCJI WSPÓŁPRACY -->
+    
+  
+    
+         <!-- FAQ -->
+         <div id="faq" class="faq-section">
+          <h3>Często zadawane pytania</h3>
+          <div class="faq-item">
+            <button class="faq-question">Czym jest GymMatch? <i class="fas fa-chevron-down"></i></button>
+            <div class="faq-answer">
+              <p>GymMatch to jedyna w Polsce porównywarka siłowni. Dzięki niej możesz szybko sprawdzić ceny karnetów, udogodnienia oraz opinie, aby wybrać najlepszą siłownię dla siebie.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question">Czy korzystanie z GymMatch jest darmowe? <i class="fas fa-chevron-down"></i></button>
+            <div class="faq-answer">
+              <p>Tak, korzystanie z GymMatch jest całkowicie darmowe. Serwis powstał, aby ułatwić wybór odpowiedniej siłowni bez dodatkowych kosztów.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question">Skąd pochodzą informacje o siłowniach i cennikach? <i class="fas fa-chevron-down"></i></button>
+            <div class="faq-answer">
+              <p>Dane pochodzą z oficjalnych stron siłowni, a także są aktualizowane na podstawie zgłoszeń użytkowników. Staramy się, aby informacje były zawsze możliwie najświeższe.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question">Co zrobić, jeśli znalazłem błąd? <i class="fas fa-chevron-down"></i></button>
+            <div class="faq-answer">
+              <p>Jeśli zauważysz błąd, możesz go łatwo zgłosić przy pomocy formularza dostępnego w stopce lub klikając w przycisk <b>„Zgłoś błąd lub aktualizację”</b>. Dzięki Twojej pomocy serwis będzie jeszcze lepszy!</p>
+            </div>
+          </div>
+        </div>
+        <!-- /FAQ -->
+  
+
+    <!-- Przycisk zgłoszenia błędu -->
+    <button class="report-footer-btn" onclick="openReportModal()">
+      <i class="fas fa-flag"></i> Zgłoś błąd lub aktualizację
+    </button>
+
+    <!-- Dolna część -->
+    <div class="footer-bottom">
+      <p>&copy; 2025 GymMatch. <br> Wszelkie prawa zastrzeżone.</p>
+    </div>
+  </div>
+</footer>
+
+ <!-- Modal zgłaszania błędu -->
+ <div class="report-modal" id="report-modal">
+  <div class="report-modal-content">
+    <button class="close-modal" id="close-report-modal">&times;</button>
+    
+    <div id="report-form-container">
+      <h2 class="report-modal-title"><i class="fas fa-exclamation-circle"></i> Zgłoś błąd/aktualizację</h2>
+      
+      <form id="report-form" class="report-form">
+        <div class="form-group">
+          <label for="report-gym-select">Wybierz siłownię *</label>
+          <select id="report-gym-select" required>
+            <option value="">-- Wybierz siłownię --</option>
+            <!-- Opcje zostaną wypełnione dynamicznie -->
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="report-type">Typ zgłoszenia *</label>
+          <select id="report-type" required>
+            <option value="">Wybierz typ zgłoszenia</option>
+            <option value="cena">Nieaktualna cena</option>
+            <option value="godziny">Nieprawidłowe godziny otwarcia</option>
+            <option value="wyposazenie">Nieaktualne wyposażenie</option>
+            <option value="kontakt">Nieprawidłowe dane kontaktowe</option>
+            <option value="zdjecie">Nieprawidłowe zdjęcie</option>
+            <option value="inne">Inny problem</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="report-description">Opis problemu *</label>
+          <textarea id="report-description" placeholder="Opisz szczegółowo, co jest nieaktualne lub nieprawidłowe..." required></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label for="report-email">Twój email (opcjonalnie)</label>
+          <input type="email" id="report-email" placeholder="Jeśli chcesz otrzymać odpowiedź">
+        </div>
+        
+        <div class="form-actions">
+          <button type="button" class="cancel-btn" id="cancel-report">Anuluj</button>
+          <button type="submit" class="submit-btn">Wyślij zgłoszenie</button>
+        </div>
+      </form>
+    </div>
+    
+    <div id="report-success" class="report-success" style="display: none;">
+      <i class="fas fa-check-circle"></i>
+      <h3>Zgłoszenie wysłane!</h3>
+      <p>Dziękujemy za zgłoszenie. Sprawdzimy je najszybciej jak to możliwe.</p>
+      <button type="button" class="submit-btn" id="report-close-success">Zamknij</button>
+    </div>
+  </div>
+</div>
+
+  <script>
+    // Konfiguracja
+    const SHEET_ID = "1RpGc5TAPyvwcm7wIx2pGaT6el_-250BKEuO-XZKgXms";
+    const SHEET_NAME = 'Kraków';
+    
+    // Mapa kolumn - zaktualizowana o kolumny z cenami
+    const COLUMN_MAP = {
+      NAZWA: 0,
+      ADRES: 1,
+      MIASTO: 2,
+      DZIELNICA: 3,
+      RODZAJ: 4,
+      STRONA: 5,
+      POWIERZCHNIA: 6,
+      KLIENCI: 7,
+      ZDJECIE: 8,
+      OPINIE_SCORE: 9,
+      OPINIE_LINK: 10,
+      MULTISPORT: 11,
+      MEDICOVER: 12,
+      PZU: 13,
+      FITPROFIT: 14,
+      PARKING: 15,
+      SAUNA: 16,
+      FIT_BAR: 17,
+      WIFI: 18,
+      DOSTEP_24H: 19,
+      BASEN: 20,
+      ZAJECIA_GRUPOWE: 21,
+      JACUZZI: 22,
+      // Nowe kolumny z cenami
+      CENA_MIESIECZNA: 23,
+      CENA_6MIES: 24,
+      CENA_ROCZNA: 25,
+      CENA_BASIC: 26,
+      CENA_JEDNORAZOWA: 27,
+      CENA_HALF_OPEN: 28,
+      UWAGI_CENOWE: 35,
+      LAT: 36,
+      LON: 37
+    };
+
+    // Domyślne zdjęcia
+    const DEFAULT_IMAGES = {
+      'Klub fitness': 'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
+      'Studio PT': 'https://images.unsplash.com/photo-1538805060514-97d9cc17730c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
+      'EMS': 'https://images.unsplash.com/photo-1551632436-cbf8dd35adfa?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
+      'Zajęcia grupowe': 'https://images.unsplash.com/photo-1545205597-3d9d02c29597?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80'
+    };
+
+    // Zmienne globalne
+    let gyms = [];
+    let currentPage = 1;
+    const rowsPerPage = 12;
+    let lastPageScrolled = currentPage;
+    let currentSort = { column: null, asc: true };
+    let typeFilters = {
+      fitness: true, studio: true, ems: true, group: true
+    };
+    let packageFilters = {
+      multisport: false,
+      medicover: false,
+      pzu: false,
+      fitprofit: false
+    };
+    let amenityFilters = {
+      parking: false,
+      sauna: false,
+      machines: false,
+      wifi: false,
+      open24h: false,
+      pool: false,
+      groupClasses: false,
+      jacuzzi: false
+    };
+    let comparedGyms = [];
+    let pricingModal = null;
+
+    // Elementy DOM
+    const gymContainer = document.getElementById('gym-container');
+    const searchInput = document.getElementById('search');
+    const districtFilter = document.getElementById('filter-district');
+    const typeFilter = document.getElementById('filter-type');
+    const ratingFilter = document.getElementById('filter-rating');
+    const paginationDiv = document.getElementById('pagination');
+    const resetBtn = document.getElementById('reset-filters');
+    const statusElement = document.getElementById('data-status');
+    const compareContainer = document.getElementById('compare-container');
+    const clearComparisonBtn = document.getElementById('clear-comparison');
+    const openCompareBtn = document.getElementById('open-compare-btn');
+    const compareModal = document.getElementById('compare-modal');
+    const closeModalBtn = document.getElementById('close-modal');
+    const compareCountBadge = document.getElementById('compare-count');
+    const pricingModalElement = document.getElementById('pricing-modal');
+    const closePricingModalBtn = document.getElementById('close-pricing-modal');
+    const pricingModalList = document.getElementById('pricing-modal-list');
+    const pricingModalNote = document.getElementById('pricing-modal-note');
+
+    // Funkcja do określania dzielnicy z adresu
+    function getDistrictFromAddress(address) {
+      const districts = [
+        'Śródmieście', 'Podgórze', 'Nowa Huta', 'Krowodrza', 'Bronowice', 
+        'Grzegórzki', 'Kazimierz', 'Ruczaj', 'Dytmarów', 'Czerwone Maki',
+        'Wzgórza Krzesławickie', 'Bieńczyce', 'Prądnik Czerwony', 'Stare Miasto'
+      ];
+      
+      const foundDistrict = districts.find(district =>
+        address.toLowerCase().includes(district.toLowerCase()) ||
+        address.toLowerCase().includes(district.toLowerCase().replace(' ', ''))
+      ); 
+      
+      return foundDistrict || 'Inna';
+    }
+
+    // Ładowanie danych z Google Sheets
+    async function loadData() {
+      try {
+        const response = await fetch(
+          `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_NAME}`
+        );
+        if (!response.ok) throw new Error("Błąd pobierania danych");
+        const text = await response.text();
+        const json = JSON.parse(text.substr(47).slice(0, -2));
+        console.log("COLS:", json.table.cols.map((c, i) => `${i}: "${c.label}"`));
+        console.log("FIRST ROW:", json.table.rows[0]);
+
+        
+        gyms = json.table.rows.map((row, index) => {
+          const c = row.c || [];
+          const type = c[COLUMN_MAP.RODZAJ]?.v || 'Klub fitness';
+          const reviewScore = c[COLUMN_MAP.OPINIE_SCORE]?.v;
+          
+          // Przygotowanie danych o cenach
+          const pricing = [];
+          if (c[COLUMN_MAP.CENA_MIESIECZNA]?.v) pricing.push({ name: "Miesięczny (odnawialny)", price: parseFloat(c[COLUMN_MAP.CENA_MIESIECZNA].v) });
+          if (c[COLUMN_MAP.CENA_6MIES]?.v) pricing.push({ name: "6-miesięczny", price: parseFloat(c[COLUMN_MAP.CENA_6MIES].v) });
+          if (c[COLUMN_MAP.CENA_BASIC]?.v) pricing.push({ name: "Miesięczny", price: parseFloat(c[COLUMN_MAP.CENA_BASIC].v) });
+          if (c[COLUMN_MAP.CENA_ROCZNA]?.v) pricing.push({ name: "12-miesięczny", price: parseFloat(c[COLUMN_MAP.CENA_ROCZNA].v) });
+          if (c[COLUMN_MAP.CENA_HALF_OPEN]?.v) pricing.push({ name: "Miesięczny (do 16:00)", price: parseFloat(c[COLUMN_MAP.CENA_HALF_OPEN].v) });
+          if (c[COLUMN_MAP.CENA_JEDNORAZOWA]?.v) pricing.push({ name: "Wejściówka", price: parseFloat(c[COLUMN_MAP.CENA_JEDNORAZOWA].v) });
+
+          
+          return {
+            id: index,
+            lat: c[COLUMN_MAP.LAT]?.v ? parseFloat(String(c[COLUMN_MAP.LAT].v).replace(',', '.')) : null,
+            lon: c[COLUMN_MAP.LON]?.v ? parseFloat(String(c[COLUMN_MAP.LON].v).replace(',', '.')) : null,
+            name: c[COLUMN_MAP.NAZWA]?.v || '',
+            address: c[COLUMN_MAP.ADRES]?.v || '',
+            city: c[COLUMN_MAP.MIASTO]?.v || 'Kraków',
+            district: c[COLUMN_MAP.DZIELNICA]?.v || getDistrictFromAddress(c[COLUMN_MAP.ADRES]?.v || ''),
+            type: type,
+            website: c[COLUMN_MAP.STRONA]?.v || '',
+            area: parseInt(c[COLUMN_MAP.POWIERZCHNIA]?.v) || 0,
+            capacity: parseInt(c[COLUMN_MAP.KLIENCI]?.v) || 0,
+            image: c[COLUMN_MAP.ZDJECIE]?.v || DEFAULT_IMAGES[type] || DEFAULT_IMAGES['Klub fitness'],
+            reviewScore: reviewScore || '-',
+            reviewsLink: c[COLUMN_MAP.OPINIE_LINK]?.v || '',
+            hasReviews: reviewScore && !isNaN(parseFloat(reviewScore)),
+            multisport: c[COLUMN_MAP.MULTISPORT]?.v === 'Tak' || false,
+            medicover: c[COLUMN_MAP.MEDICOVER]?.v === 'Tak' || false,
+            pzu: c[COLUMN_MAP.PZU]?.v === 'Tak' || false,
+            fitprofit: c[COLUMN_MAP.FITPROFIT]?.v === 'Tak' || false,
+            parking: c[COLUMN_MAP.PARKING]?.v === 'Tak' || false,
+            sauna: c[COLUMN_MAP.SAUNA]?.v === 'Tak' || false,
+            machines: c[COLUMN_MAP.FIT_BAR]?.v === 'Tak' || false,
+            wifi: c[COLUMN_MAP.WIFI]?.v === 'Tak' || false,
+            open24h: c[COLUMN_MAP.DOSTEP_24H]?.v === 'Tak' || false,
+            pool: c[COLUMN_MAP.BASEN]?.v === 'Tak' || false,
+            groupClasses: c[COLUMN_MAP.ZAJECIA_GRUPOWE]?.v === 'Tak' || false,
+            jacuzzi: c[COLUMN_MAP.JACUZZI]?.v === 'Tak' || false,
+            pricing: pricing,
+            priceNote: c[COLUMN_MAP.UWAGI_CENOWE]?.v || ''
+          };
+        });
+
+        updateStats();
+        populateFilters();
+        loadFiltersFromURL();
+        renderGyms();
+      }
+      catch(err) {
+        console.error(err);
+      }
+    }
+
+    // Aktualizacja statystyk
+    function updateStats() {
+      document.getElementById('total-gyms').textContent = gyms.length;
+      document.getElementById('total-areas').textContent = [...new Set(gyms.map(g => g.district))].length;
+      document.getElementById('multisport-count').textContent = gyms.filter(g => g.multisport).length;
+    }
+
+    // Inicjalizacja filtrów
+    function populateFilters() {
+      // Wyczyść istniejące opcje (zachowaj pierwszą)
+      while (districtFilter.options.length > 1) districtFilter.remove(1);
+      while (typeFilter.options.length > 1) typeFilter.remove(1);
+
+      // Dodaj dzielnice
+      [...new Set(gyms.map(g => g.district))].sort().forEach(district => {
+        const opt = document.createElement('option');
+        opt.value = district;
+        opt.textContent = district;
+        districtFilter.appendChild(opt);
+      });
+      
+      // Dodaj typy
+      [...new Set(gyms.map(g => g.type))].sort().forEach(type => {
+        const opt = document.createElement('option');
+        opt.value = type;
+        opt.textContent = type;
+        typeFilter.appendChild(opt);
+      });
+    }
+
+    // Filtrowanie danych
+    function getFilteredData() {
+      const searchTerm = searchInput.value.toLowerCase();
+      const minRating = parseFloat(ratingFilter.value) || 0;
+      
+      return gyms.filter(g => {
+        const matchSearch = 
+          g.name.toLowerCase().includes(searchTerm) || 
+          g.address.toLowerCase().includes(searchTerm) || 
+          g.district.toLowerCase().includes(searchTerm);
+        
+        const matchDistrict = districtFilter.value === '' || g.district === districtFilter.value;
+        const matchType = typeFilter.value === '' || g.type === typeFilter.value;
+        
+        // Sprawdź czy spełnia warunek oceny
+        let matchRating = true;
+        if (minRating > 0) {
+          if (g.hasReviews) {
+            matchRating = parseFloat(g.reviewScore) >= minRating;
+          } else {
+            matchRating = false;
+          }
+        }
+        
+        let matchTypeCheckbox = false;
+        if (g.type === 'Klub fitness' && typeFilters.fitness) matchTypeCheckbox = true;
+        if (g.type === 'Studio PT' && typeFilters.studio) matchTypeCheckbox = true;
+        if (g.type === 'EMS' && typeFilters.ems) matchTypeCheckbox = true;
+        if (g.type === 'Zajęcia grupowe' && typeFilters.group) matchTypeCheckbox = true;
+        
+        // Sprawdź czy spełnia warunki pakietów sportowych
+        let matchPackages = true;
+        if (packageFilters.multisport && !g.multisport) matchPackages = false;
+        if (packageFilters.medicover && !g.medicover) matchPackages = false;
+        if (packageFilters.pzu && !g.pzu) matchPackages = false;
+        if (packageFilters.fitprofit && !g.fitprofit) matchPackages = false;
+        
+        // Sprawdź czy spełnia warunki udogodnień
+        let matchAmenities = true;
+        if (amenityFilters.parking && !g.parking) matchAmenities = false;
+        if (amenityFilters.sauna && !g.sauna) matchAmenities = false;
+        if (amenityFilters.machines && !g.machines) matchAmenities = false;
+        if (amenityFilters.wifi && !g.wifi) matchAmenities = false;
+        if (amenityFilters.open24h && !g.open24h) matchAmenities = false;
+        if (amenityFilters.pool && !g.pool) matchAmenities = false;
+        if (amenityFilters.groupClasses && !g.groupClasses) matchAmenities = false;
+        if (amenityFilters.jacuzzi && !g.jacuzzi) matchAmenities = false;
+        
+        // Filtry cenowe karnetów
+        const monthlyMax = parseFloat(document.getElementById('price-monthly-max')?.value);
+        const sixMonthMax = parseFloat(document.getElementById('price-6m-max')?.value);
+        const yearlyMax = parseFloat(document.getElementById('price-yearly-max')?.value);
+        const singleMax = parseFloat(document.getElementById('price-single-max')?.value);
+
+        // pomocniczo: pobierz cenę dla danego wariantu
+        const priceFor = (name) => {
+          const p = g.pricing?.find(p => p.name === name);
+          return p != null ? p.price : null;
+        };
+
+        if (!isNaN(monthlyMax)) {
+          const price = priceFor("Miesięczny");
+          if (price == null || price > monthlyMax) return false;
+        }
+        if (!isNaN(sixMonthMax)) {
+          const price = priceFor("6-miesięczny");
+          if (price == null || price > sixMonthMax) return false;
+        }
+        if (!isNaN(yearlyMax)) {
+          const price = priceFor("12-miesięczny");
+          if (price == null || price > yearlyMax) return false;
+        }
+        if (!isNaN(singleMax)) {
+          const price = priceFor("Wejściówka");
+          if (price == null || price > singleMax) return false;
+        }
+
+
+
+        return matchSearch && matchDistrict && matchType && matchTypeCheckbox && matchRating && matchPackages && matchAmenities;
+      });
+    }
+
+    // Sortowanie danych
+    function sortData(data) {
+      if (!currentSort.column) return data;
+      
+      return data.slice().sort((a, b) => {
+        let A = a[currentSort.column];
+        let B = b[currentSort.column];
+        
+        if (currentSort.column === 'area' || currentSort.column === 'capacity') {
+          A = A || 0;
+          B = B || 0;
+          return (A - B) * (currentSort.asc ? 1 : -1);
+        }
+        
+        A = typeof A === 'string' ? A.toLowerCase() : A;
+        B = typeof B === 'string' ? B.toLowerCase() : B;
+        return (A < B ? -1 : A > B ? 1 : 0) * (currentSort.asc ? 1 : -1);
+      });
+    }
+
+    // Generowanie znacznika typu
+    function getTypeBadge(type) {
+      if (type === 'Klub fitness') return 'FITNESS';
+      if (type === 'Studio PT') return 'STUDIO PT';
+      if (type === 'EMS') return 'EMS';
+      if (type === 'Zajęcia grupowe') return 'GRUPOWE';
+      return type;
+    }
+
+    // Generowanie ikon udogodnień
+    function getAmenityIcon(amenity) {
+      const icons = {
+        parking: 'fa-parking',
+        sauna: 'fa-temperature-high',
+        machines: 'fa-blender',
+        wifi: 'fa-wifi',
+        open24h: 'fa-clock',
+        pool: 'fa-swimming-pool',
+        groupClasses: 'fa-users',
+        jacuzzi: 'fa-hot-tub'
+      };
+      return icons[amenity] || 'fa-check';
+    }
+
+    // Dodaj/usuń siłownię z porównania
+    function toggleCompare(gymId) {
+      const index = comparedGyms.indexOf(gymId);
+      if (index === -1) {
+        if (comparedGyms.length >= 3) {
+          alert('Możesz porównać maksymalnie 3 siłownie naraz');
+          return;
+        }
+        comparedGyms.push(gymId);
+      } else {
+        comparedGyms.splice(index, 1);
+      }
+      
+      // Zapisz w localStorage
+      localStorage.setItem('comparedGyms', JSON.stringify(comparedGyms));
+      
+      updateCompareUI();
+      renderGyms();
+    }
+
+    // Wyczyść porównanie
+    function clearComparison() {
+      comparedGyms = [];
+      localStorage.removeItem('comparedGyms');
+      updateCompareUI();
+      renderGyms();
+    }
+
+    // Aktualizacja UI porównania
+    function updateCompareUI() {
+      // Aktualizuj badge z liczbą
+      compareCountBadge.textContent = comparedGyms.length;
+      
+      // Pokaż/ukryj przycisk otwarcia modala
+      if (comparedGyms.length > 0) {
+        openCompareBtn.style.display = 'flex';
+      } else {
+        openCompareBtn.style.display = 'none';
+      }
+      
+      // Renderuj zawartość modala
+      renderComparison();
+    }
+
+    // Renderowanie porównania
+    function renderComparison() {
+      if (comparedGyms.length === 0) {
+        compareContainer.innerHTML = '<p>Wybierz siłownie do porównania</p>';
+        return;
+      }
+      const comparisonData = comparedGyms.map(id => gyms.find(g => g.id === id));
+
+      // Sprawdź szerokość ekranu
+      if (window.innerWidth < 900) {
+        // Wersja mobilna - karty jedna pod drugą
+        compareContainer.innerHTML = comparisonData.map(gym => `
+          <div style="border:1px solid #eee; border-radius:12px; margin-bottom:18px; background:#fafbff; box-shadow:0 2px 10px rgba(67,97,238,0.07); padding:18px;">
+            <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
+              <div style="width:72px; height:60px; border-radius:10px; background-image:url('${gym.image}'); background-size:cover; background-position:center;"></div>
+              <div>
+                <strong style="font-size:1.18rem;">${gym.name}</strong><br>
+                <span style="font-size:0.97em; color:#888;">${gym.type}</span>
+              </div>
+            </div>
+            <div style="font-size:1em; margin-bottom:4px;"><i class="fas fa-map-marker-alt"></i> <b>Lokalizacja:</b> ${gym.district}, ${gym.address}</div>
+            <div style="font-size:1em; margin-bottom:4px;"><i class="fas fa-ruler-combined"></i> <b>Powierzchnia:</b> ${gym.area || '-'} m²</div>
+            <div style="font-size:1em; margin-bottom:4px;"><i class="fas fa-users"></i> <b>Pojemność:</b> ${gym.capacity || '-'} osób/dzień</div>
+            <div style="font-size:1em; margin-bottom:4px;"><i class="fas fa-star"></i> <b>Ocena:</b> ${gym.hasReviews ? gym.reviewScore + ' ★' : '-'}</div>
+            <div style="font-size:1em; margin-bottom:4px;"><b>Pakiety:</b> ${
+              [gym.multisport ? 'Multisport' : '', gym.medicover ? 'Medicover' : '', gym.pzu ? 'PZU' : '', gym.fitprofit ? 'FitProfit' : ''].filter(Boolean).join(', ') || '-'
+            }</div>
+            <div style="font-size:1em; margin-bottom:4px;"><b>Udogodnienia:</b> ${
+              [gym.parking ? 'Parking' : '', gym.sauna ? 'Sauna' : '', gym.machines ? 'Fit Bar' : '', gym.wifi ? 'WiFi' : '', gym.open24h ? '24/7' : '', gym.pool ? 'Basen' : '', gym.groupClasses ? 'Zajęcia grupowe' : '', gym.jacuzzi ? 'Jacuzzi' : ''].filter(Boolean).join(', ') || '-'
+            }</div>
+            ${gym.pricing && gym.pricing.length > 0 ? `
+            <div style="font-size:1em; margin-bottom:4px;"><b>Ceny karnetów - średnia cena za miesiąc:</b> ${
+              gym.pricing.slice(0, 3).map(p => `${p.name}: ${p.price} zł`).join(', ')
+            }${gym.pricing.length > 3 ? '...' : ''}</div>
+            ` : ''}
+            <div style="margin-top:7px;">
+              ${gym.website ? `<a href="${gym.website}" target="_blank" style="color:#4361ee;text-decoration:underline;font-weight:500;"><i class="fas fa-external-link-alt"></i> Strona</a>` : ''}
+              ${gym.hasReviews ? `<a href="${gym.reviewsLink}" target="_blank" style="color:#ffa600;margin-left:14px;text-decoration:underline;font-weight:500;"><i class="fas fa-star"></i> Opinie</a>` : ''}
+            </div>
+          </div>
+        `).join('');
+      } else {
+        // Wersja desktopowa - boxy obok siebie
+        compareContainer.innerHTML = `
+          <div class="compare-boxes">
+            ${comparisonData.map(gym => `
+              <div class="compare-box">
+                <div class="compare-box-header">
+                  <div class="compare-box-image" style="background-image: url('${gym.image}')"></div>
+                  <div>
+                    <div class="compare-box-title">${gym.name}</div>
+                    <div class="compare-box-type">${gym.type}</div>
+                  </div>
+                </div>
+                <div class="compare-box-details">
+                  <div class="compare-box-detail">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>${gym.district}, ${gym.address}</span>
+                  </div>
+                  <div class="compare-box-detail">
+                    <i class="fas fa-ruler-combined"></i>
+                    <span>${gym.area || '-'} m²</span>
+                  </div>
+                  <div class="compare-box-detail">
+                    <i class="fas fa-users"></i>
+                    <span>${gym.capacity || '-'} osób/dzień</span>
+                  </div>
+                  <div class="compare-box-detail">
+                    <i class="fas fa-star"></i>
+                    <span>${gym.hasReviews ? gym.reviewScore + ' ★' : '-'}</span>
+                  </div>
+                </div>
+                
+                ${gym.multisport || gym.medicover || gym.pzu || gym.fitprofit ? `
+                  <div class="compare-box-packages">
+                    ${gym.multisport ? `<span class="gym-package multisport"><i class="fas fa-id-card"></i> Multisport</span>` : ''}
+                    ${gym.medicover ? `<span class="gym-package medicover"><i class="fas fa-heartbeat"></i> Medicover</span>` : ''}
+                    ${gym.pzu ? `<span class="gym-package pzu"><i class="fas fa-shield-alt"></i> PZU</span>` : ''}
+                    ${gym.fitprofit ? `<span class="gym-package fitprofit"><i class="fas fa-user-plus"></i> FitProfit</span>` : ''}
+                  </div>
+                ` : ''}
+                
+                ${gym.parking || gym.sauna || gym.machines || gym.wifi || gym.open24h || gym.pool || gym.groupClasses || gym.jacuzzi ? `
+                  <div class="compare-box-amenities">
+                    ${gym.parking ? `<span class="compare-box-amenity"><i class="fas fa-parking"></i> Parking</span>` : ''}
+                    ${gym.sauna ? `<span class="compare-box-amenity"><i class="fas fa-temperature-high"></i> Sauna</span>` : ''}
+                    ${gym.machines ? `<span class="compare-box-amenity"><i class="fas fa-blender"></i> Fit Bar</span>` : ''}
+                    ${gym.wifi ? `<span class="compare-box-amenity"><i class="fas fa-wifi"></i> WiFi</span>` : ''}
+                    ${gym.open24h ? `<span class="compare-box-amenity"><i class="fas fa-clock"></i> 24/7</span>` : ''}
+                    ${gym.pool ? `<span class="compare-box-amenity"><i class="fas fa-swimming-pool"></i> Basen</span>` : ''}
+                    ${gym.groupClasses ? `<span class="compare-box-amenity"><i class="fas fa-users"></i> Zajęcia grupowe</span>` : ''}
+                    ${gym.jacuzzi ? `<span class="compare-box-amenity"><i class="fas fa-hot-tub"></i> Jacuzzi</span>` : ''}
+                  </div>
+                ` : ''}
+
+         ${gym.pricing && gym.pricing.length > 0 ? `
+<div class="compare-box-prices">
+  ${gym.pricing.slice(0, 4).map(p => `
+    <div class="compare-box-price-item">
+      <span class="compare-box-price-name">${p.name}</span>
+      <span class="compare-box-price-value">${Number(p.price).toFixed(2)} zł</span>
+    </div>
+  `).join('')}
+</div>
+` : ''}
+                
+                <div style="margin-top:15px; display:flex; gap:10px;">
+                  ${gym.website ? `<a href="${gym.website}" target="_blank" class="gym-link" style="flex:1; text-align:center; padding:8px;"><i class="fas fa-external-link-alt"></i> Strona</a>` : ''}
+                  ${gym.hasReviews ? `<a href="${gym.reviewsLink}" target="_blank" class="review-link" style="flex:1; text-align:center; padding:8px;"><i class="fas fa-star"></i> Opinie</a>` : ''}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      }
+    }
+
+    // Otwórz modal porównania
+    function openCompareModal() {
+      compareModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    // Zamknij modal porównania
+    function closeCompareModal() {
+      compareModal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // Otwórz modal z cenami
+    function openPricingModal(pricingData, gymName, priceNote) {
+      pricingModalList.innerHTML = pricingData.map(item => `
+  <div class="pricing-modal-item">
+    <div class="pricing-modal-name">${item.name}</div>
+    <div class="pricing-modal-price">${Number(item.price).toFixed(2)} zł</div>
+  </div>
+`).join('');
+
+      
+      const title = pricingModalElement.querySelector('.pricing-modal-title');
+      title.textContent = `Cennik: ${gymName}`;
+      
+      pricingModalNote.textContent = priceNote || 'Ceny mogą ulec zmianie, sprawdź aktualny cennik na stronie siłowni.';
+      
+      pricingModalElement.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    // Zamknij modal z cenami
+    function closePricingModal() {
+      pricingModalElement.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+// Renderowanie kart siłowni
+    function renderGyms() {
+      updateURL();
+      const filtered = sortData(getFilteredData());
+
+      if (filtered.length === 0) {
+        gymContainer.innerHTML = `
+          <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px;">
+            <i class="fas fa-search" style="font-size: 4rem; margin-bottom: 20px; color: #cbd5e1;"></i>
+            <h3 style="margin-bottom: 10px; color: var(--dark);">Brak wyników</h3>
+            <p style="color: #64748b;">Niestety, żadna siłownia nie spełnia Twoich kryteriów.</p>
+            <button onclick="document.getElementById('reset-filters').click()" style="margin-top: 20px; padding: 10px 20px; background: var(--primary); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 500; transition: background 0.2s;">
+              <i class="fas fa-undo"></i> Wyczyść filtry
+            </button>
+          </div>
+        `;
+        paginationDiv.style.display = 'none'; // Ukryj paginację
+        return; // Zatrzymaj funkcję
+      } else {
+        paginationDiv.style.display = 'flex'; // Przywróć paginację
+      }
+
+      const totalPages = Math.ceil(filtered.length / rowsPerPage) || 1;
+      if (currentPage > totalPages) currentPage = totalPages;
+      const start = (currentPage - 1) * rowsPerPage;
+      const pageData = filtered.slice(start, start + rowsPerPage);
+
+      gymContainer.innerHTML = pageData.map((g, index) => {
+        // LOGIKA WYRÓŻNIANIA (CityFit)
+        const isCityFit = g.name.toLowerCase().includes('cityfit');
+
+        // Przygotuj listę dostępnych udogodnień
+        const amenities = [];
+        if (g.parking) amenities.push('parking');
+        if (g.sauna) amenities.push('sauna');
+        if (g.machines) amenities.push('machines');
+        if (g.wifi) amenities.push('wifi');
+        if (g.open24h) amenities.push('open24h');
+        if (g.pool) amenities.push('pool');
+        if (g.groupClasses) amenities.push('groupClasses');
+        if (g.jacuzzi) amenities.push('jacuzzi');
+
+        // Sprawdź czy siłownia jest w porównaniu
+        const isCompared = comparedGyms.includes(g.id);
+
+        return `
+        <div class="gym-card ${isCityFit ? 'featured-gym' : ''}" style="animation-delay: ${index * 0.05}s">
+          <div class="gym-image" style="background-image: url('${g.image}')">
+            ${isCityFit ? '<div class="featured-badge"><i class="fas fa-crown"></i> Polecane</div>' : ''}
+            <span class="gym-type">${getTypeBadge(g.type)}</span>
+          </div>
+          <div class="gym-content">
+            <h3 class="gym-title">
+              ${g.name}
+              ${isCityFit ? '<i class="fas fa-check-circle" style="color:var(--gold); font-size:0.8em; margin-left:5px;" title="Partner Premium"></i>' : ''}
+            </h3>
+            <div class="gym-location">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>${g.district}, ${g.address}</span>
+            </div>
+            <div class="gym-stats">
+              <div class="stat">
+                <i class="fas fa-ruler-combined"></i>
+                <span>${g.area || '-'} m²</span>
+              </div>
+              <div class="stat">
+                <i class="fas fa-users"></i>
+                <span>${g.capacity || '-'} osób/dzień</span>
+              </div>
+            </div>
+
+            ${g.multisport || g.medicover || g.pzu || g.fitprofit ? `
+              <div class="gym-packages">
+                ${g.multisport ? '<span class="gym-package multisport"><i class="fas fa-id-card"></i> Multisport</span>' : ''}
+                ${g.medicover ? '<span class="gym-package medicover"><i class="fas fa-heartbeat"></i> Medicover</span>' : ''}
+                ${g.pzu ? '<span class="gym-package pzu"><i class="fas fa-shield-alt"></i> PZU</span>' : ''}
+                ${g.fitprofit ? '<span class="gym-package fitprofit"><i class="fas fa-user-plus"></i> FitProfit</span>' : ''}
+              </div>
+            ` : ''}
+
+            ${amenities.length > 0 ? `
+            <div class="gym-amenities">
+                ${amenities.map(amenity => `
+                <span class="gym-amenity">
+                    <i class="fas ${getAmenityIcon(amenity)}"></i>
+                    ${amenity === 'parking' ? 'Parking' : 
+                    amenity === 'sauna' ? 'Sauna' : 
+                    amenity === 'machines' ? 'Fit Bar' : 
+                    amenity === 'wifi' ? 'WiFi' : 
+                    amenity === 'open24h' ? '24/7' : 
+                    amenity === 'pool' ? 'Basen' : 
+                    amenity === 'jacuzzi' ? 'Jacuzzi' : 
+                    'Zajęcia grupowe'}
+                </span>
+                `).join('')}
+            </div>
+            ` : ''}
+
+            ${g.pricing && g.pricing.length > 0 ? `
+              <div class="gym-pricing" onclick="openPricingModal(${JSON.stringify(g.pricing).replace(/"/g, '&quot;')}, '${g.name.replace(/'/g, "\\'")}', '${(g.priceNote || '').replace(/'/g, "\\'")}')">
+                <div class="pricing-title">
+                  <i class="fas fa-tag"></i>
+                  <span>Ceny karnetów:</span>
+                </div>
+                <div class="pricing-grid">
+                  ${g.pricing.slice(0, 6).map(price => `
+                    <div class="pricing-item">
+                      <div class="pricing-name">${price.name}</div>
+                      <div class="pricing-price">${Number(price.price).toFixed(2)} zł</div>
+                    </div>
+                  `).join('')}
+                </div>
+                ${g.priceNote ? `<div class="pricing-note">${g.priceNote}</div>` : ''}
+              </div>
+            ` : ''}
+
+            <div class="gym-actions">
+              ${g.website ? `
+                <a href="${g.website}" target="_blank" class="gym-link">
+                  <i class="fas fa-external-link-alt"></i> Odwiedź stronę
+                </a>
+              ` : ''}
+
+              ${g.hasReviews ? `
+                <a href="${g.reviewsLink}" target="_blank" class="review-link">
+                  ${g.reviewScore} <i class="fas fa-star"></i>
+                </a>
+              ` : ''}
+              
+              <button class="compare-btn ${isCompared ? 'active' : ''}" onclick="toggleCompare(${g.id})" title="Porównaj">
+                <i class="fas fa-balance-scale"></i>
+                <span class="compare-btn-label">${isCompared ? 'Usuń' : 'Porównaj'}</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      `}).join('');
+
+      renderPagination(totalPages);
+
+      // przewiń do góry jeśli zmieniła się strona
+      if (currentPage !== lastPageScrolled) {
+        document.getElementById('gym-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        lastPageScrolled = currentPage;
+      }
+    }
+
+    // Renderowanie paginacji
+    function renderPagination(totalPages) {
+      paginationDiv.innerHTML = '';
+      
+      // Przycisk poprzednia strona
+      const prevBtn = document.createElement('button');
+      prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
+      prevBtn.className = 'page-btn' + (currentPage === 1 ? ' disabled' : '');
+      prevBtn.addEventListener('click', () => {
+        if (currentPage > 1) {
+          currentPage--;
+          renderGyms();
+        }
+      });
+      paginationDiv.appendChild(prevBtn);
+      
+      // Przyciski numerów stron
+      const maxVisiblePages = 5;
+      let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+      let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+      
+      if (endPage - startPage + 1 < maxVisiblePages) {
+        startPage = Math.max(1, endPage - maxVisiblePages + 1);
+      }
+      
+      for (let i = startPage; i <= endPage; i++) {
+        const btn = document.createElement('button');
+        btn.textContent = i;
+        btn.className = 'page-btn' + (i === currentPage ? ' active' : '');
+        btn.addEventListener('click', () => {
+          currentPage = i;
+          renderGyms();
+        });
+        paginationDiv.appendChild(btn);
+      }
+      
+      // Przycisk następna strona
+      const nextBtn = document.createElement('button');
+      nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
+      nextBtn.className = 'page-btn' + (currentPage === totalPages ? ' disabled' : '');
+      nextBtn.addEventListener('click', () => {
+        if (currentPage < totalPages) {
+          currentPage++;
+          renderGyms();
+        }
+      });
+      paginationDiv.appendChild(nextBtn);
+    }
+
+    // Inicjalizacja checkboxów
+    function setupPackageToggles() {
+      document.querySelectorAll('.package-filter').forEach(filter => {
+        const checkbox = filter.querySelector('.package-checkbox');
+        const packageType = filter.id.replace('filter-', '');
+        
+        filter.addEventListener('click', () => {
+          checkbox.classList.toggle('checked');
+          packageFilters[packageType] = !packageFilters[packageType];
+          currentPage = 1;
+          renderGyms();
+        });
+      });
+    }
+
+    // Inicjalizacja checkboxów udogodnień
+    function setupAmenityToggles() {
+      document.querySelectorAll('.amenity-filter').forEach(filter => {
+        const checkbox = filter.querySelector('.amenity-checkbox');
+        const amenityType = filter.id.replace('filter-', '');
+        
+        filter.addEventListener('click', () => {
+          checkbox.classList.toggle('checked');
+          amenityFilters[amenityType] = !amenityFilters[amenityType];
+          currentPage = 1;
+          renderGyms();
+        });
+      });
+    }
+
+    // Dodanie listenerów
+// Dodanie listenerów
+function addEventListeners() {
+  searchInput.addEventListener('input', () => {
+    currentPage = 1;
+    renderGyms();
+  });
+
+  districtFilter.addEventListener('change', () => {
+    currentPage = 1;
+    renderGyms();
+  });
+
+  typeFilter.addEventListener('change', () => {
+    currentPage = 1;
+    renderGyms();
+  });
+
+  ratingFilter.addEventListener('change', () => {
+    currentPage = 1;
+    renderGyms();
+  });
+
+  // Filtry cenowe
+  ['price-monthly-max', 'price-6m-max', 'price-yearly-max', 'price-single-max'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.addEventListener('input', () => {
+        currentPage = 1;
+        renderGyms();
+      });
+    }
+  });
+
+  resetBtn.addEventListener('click', () => {
+  searchInput.value = '';
+  districtFilter.value = '';
+  typeFilter.value = '';
+  ratingFilter.value = '';
+
+  // Resetuj checkboxy pakietów
+  document.querySelectorAll('.package-checkbox').forEach(cb => cb.classList.remove('checked'));
+  packageFilters = { multisport: false, medicover: false, pzu: false, fitprofit: false };
+
+  // Resetuj checkboxy udogodnień
+  document.querySelectorAll('.amenity-checkbox').forEach(cb => cb.classList.remove('checked'));
+  amenityFilters = {
+    parking: false, sauna: false, machines: false, wifi: false,
+    open24h: false, pool: false, groupClasses: false, jacuzzi: false
+  };
+
+  // Reset cenowych inputów (punkt e)
+  [
+    'price-monthly-min','price-monthly-max',
+    'price-6m-min','price-6m-max',
+    'price-yearly-min','price-yearly-max',
+    'price-single-min','price-single-max'
+  ].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+
+  currentPage = 1;
+  renderGyms();
+});
+
+
+  clearComparisonBtn.addEventListener('click', clearComparison);
+  openCompareBtn.addEventListener('click', openCompareModal);
+  closeModalBtn.addEventListener('click', closeCompareModal);
+  closePricingModalBtn.addEventListener('click', closePricingModal);
+
+  // Zamknij modal porównania po kliknięciu na backdrop
+  compareModal.addEventListener('click', (e) => {
+    if (e.target === compareModal) {
+      closeCompareModal();
+    }
+  });
+
+  // Zamknij modal cen po kliknięciu na backdrop
+  pricingModalElement.addEventListener('click', (e) => {
+    if (e.target === pricingModalElement) {
+      closePricingModal();
+    }
+  });
+
+  // Zamknij modale klawiszem ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      if (compareModal.classList.contains('active')) {
+        closeCompareModal();
+      }
+      if (pricingModalElement.classList.contains('active')) {
+        closePricingModal();
+      }
+    }
+  });
+}
+
+
+    // Automatyczne odświeżanie co 5 minut
+    setInterval(loadData, 5 * 60 * 1000);
+
+    // Inicjalizacja
+    document.addEventListener('DOMContentLoaded', () => {
+      // Wczytaj porównane siłownie z localStorage
+      const savedComparison = localStorage.getItem('comparedGyms');
+      if (savedComparison) {
+        comparedGyms = JSON.parse(savedComparison);
+      }
+      
+      loadData();
+      setupPackageToggles();
+      setupAmenityToggles();
+      addEventListeners();
+      updateCompareUI();
+    });
+
+    // Umożliwia wywoływanie funkcji z poziomu HTML
+    window.toggleCompare = toggleCompare;
+    window.openPricingModal = openPricingModal;
+
+  // FAQ toggle
+  document.querySelectorAll(".faq-question").forEach(btn => {
+    btn.addEventListener("click", () => {
+      btn.classList.toggle("active");
+      const answer = btn.nextElementSibling;
+      answer.style.display = answer.style.display === "block" ? "none" : "block";
+    });
+  });
+
+  // Modal
+  function openReportModal() {
+    document.getElementById("reportModal").classList.add("active");
+  }
+
+// --- MODAL ZGŁOSZENIA ---
+const reportModal = document.getElementById("report-modal");
+const reportForm = document.getElementById("report-form");
+const reportSuccess = document.getElementById("report-success");
+const reportFormContainer = document.getElementById("report-form-container");
+
+// Otwieranie
+function openReportModal() {
+  reportModal.classList.add("active");
+
+  // Wypełnij dropdown siłowniami
+  const select = document.getElementById("report-gym-select");
+  select.innerHTML = '<option value="">-- Wybierz siłownię --</option>';
+  gyms.forEach(g => {
+    const opt = document.createElement("option");
+    opt.value = g.name;
+    opt.textContent = g.name;
+    select.appendChild(opt);
+  });
+}
+
+// Zamykanie
+function closeReportModal() {
+  reportModal.classList.remove("active");
+  reportSuccess.style.display = "none";
+  reportFormContainer.style.display = "block";
+  reportForm.reset();
+}
+
+// Obsługa formularza
+reportForm.addEventListener("submit", e => {
+  e.preventDefault();
+
+  const payload = {
+    gym: document.getElementById("report-gym-select").value,
+    type: document.getElementById("report-type").value,
+    desc: document.getElementById("report-description").value,
+    email: document.getElementById("report-email").value || ""
+  };
+
+  // Pokaż loading state
+  const submitBtn = reportForm.querySelector('.submit-btn');
+  const originalText = submitBtn.textContent;
+  submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Wysyłanie...';
+  submitBtn.disabled = true;
+
+  // Użyj Google Apps Script URL z /dev na końcu dla CORS
+  const scriptURL = "https://script.google.com/macros/s/AKfycbwdFCV8dPdj22TVUiUqAjbmFKPqhiEUQ5v6pgJbmrhsWGs1-GSRZP4dP8Q9Od72GS750g/exec";
+
+  // Użyj metody GET z parametrami URL zamiast POST
+  const params = new URLSearchParams();
+  params.append('gym', payload.gym);
+  params.append('type', payload.type);
+  params.append('desc', payload.desc);
+  params.append('email', payload.email);
+
+  fetch(`${scriptURL}?${params.toString()}`, {
+    method: "GET",
+    mode: 'no-cors' // Użyj no-cors dla prostych żądań
+  })
+  .then(() => {
+    // W trybie no-cors nie możemy odczytać odpowiedzi, więc zakładamy sukces
+    reportFormContainer.style.display = "none";
+    reportSuccess.style.display = "block";
+  })
+  .catch(err => {
+    console.error("Błąd:", err);
+    alert("Wystąpił błąd podczas wysyłania. Sprawdź czy wypełniłeś wszystkie wymagane pola.");
+  })
+  .finally(() => {
+    // Przywróć przycisk do normalnego stanu
+    submitBtn.textContent = originalText;
+    submitBtn.disabled = false;
+  });
+});
+
+// Przyciski zamknięcia
+document.getElementById("close-report-modal").addEventListener("click", closeReportModal);
+document.getElementById("cancel-report").addEventListener("click", closeReportModal);
+document.getElementById("report-close-success").addEventListener("click", closeReportModal);
+  
+// --- OBSŁUGA MAPY ---
+    let mapInstance = null;
+    let markersCluster = [];
+
+    function switchView(view) {
+      const listContainer = document.getElementById('gym-container');
+      const pagination = document.getElementById('pagination');
+      const mapContainer = document.getElementById('map-container');
+      const btnList = document.getElementById('view-list-btn');
+      const btnMap = document.getElementById('view-map-btn');
+
+      if (view === 'list') {
+        listContainer.style.display = 'grid';
+        pagination.style.display = 'flex';
+        mapContainer.style.display = 'none';
+        btnList.classList.add('active');
+        btnMap.classList.remove('active');
+      } else {
+        listContainer.style.display = 'none';
+        pagination.style.display = 'none';
+        mapContainer.style.display = 'block';
+        btnList.classList.remove('active');
+        btnMap.classList.add('active');
+        
+        // Inicjalizuj mapę tylko raz, przy pierwszym otwarciu
+        if (!mapInstance) {
+          initMap();
+        } else {
+          // Naprawia problem z "szarym kafelkiem" przy ponownym otwarciu
+          setTimeout(() => { mapInstance.invalidateSize(); }, 100);
+        }
+      }
+    }
+
+    function initMap() {
+      // Środek Krakowa
+      mapInstance = L.map('gym-map').setView([50.0614, 19.9366], 12);
+
+      // Darmowe kafelki OpenStreetMap
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+      }).addTo(mapInstance);
+
+      updateMapMarkers();
+    }
+
+ function updateMapMarkers() {
+      if (!mapInstance) return;
+
+      // Wyczyść stare markery
+      markersCluster.forEach(m => mapInstance.removeLayer(m));
+      markersCluster = [];
+
+      // Pobierz przefiltrowane dane (te same co na liście)
+      const visibleGyms = getFilteredData();
+
+      visibleGyms.forEach(gym => {
+        // Sprawdzamy czy siłownia ma współrzędne
+        if (gym.lat && gym.lon) {
+          
+          // 1. Tworzymy niestandardową ikonę (kółko z hantelkiem)
+          const customIcon = L.divIcon({
+            className: 'custom-div-icon',
+            html: '<i class="fas fa-dumbbell"></i>',
+            iconSize: [32, 32],
+            iconAnchor: [16, 16], // Wycentrowanie ikony
+            popupAnchor: [0, -16] // Dymek pojawia się nad ikoną
+          });
+
+          const marker = L.marker([gym.lat, gym.lon], { icon: customIcon })
+            .addTo(mapInstance)
+            
+            // 2. Tooltip: Nazwa pojawia się po najechaniu myszką
+            .bindTooltip(gym.name, {
+              permanent: true, 
+              direction: 'top',
+              className: 'gym-tooltip',
+              offset: [0, -20]
+            })
+            
+            // 3. Popup: Pełne info po kliknięciu (Z oceną Google, BEZ ceny)
+            .bindPopup(`
+                <div class="map-popup-title">${gym.name}</div>
+                <div>${gym.address}</div>
+                <div style="font-size:0.9em; color:#666; margin-bottom: 6px;">${gym.type}</div>
+                
+                ${gym.hasReviews ? `
+                  <div style="display:flex; align-items:center; gap:5px; margin-bottom:8px; font-weight:600; color:#4a4a4a;">
+                    <i class="fas fa-star" style="color:#ffc107;"></i> 
+                    <span>${gym.reviewScore}</span>
+                    <span style="color:#999; font-weight:400; font-size:0.85em;">/ 5.0</span>
+                  </div>
+                ` : ''}
+
+                <a href="${gym.website}" target="_blank" class="map-popup-btn">Zobacz stronę</a>
+            `);
+            
+          markersCluster.push(marker);
+        }
+      });
+    }
+
+    // WAŻNE: Podepnij aktualizację markerów pod filtry
+    // Dodaj wywołanie updateMapMarkers() wewnątrz funkcji addEventListeners -> w każdym listenerze,
+    // np. po renderGyms() dodaj updateMapMarkers();  
+
+    // --- LOKALIZACJA UŻYTKOWNIKA ---
+    let userMarker = null;
+
+    function locateUser() {
+      if (!mapInstance) return;
+
+      const btn = document.getElementById('locate-btn');
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>'; // Animacja ładowania
+
+      mapInstance.locate({ setView: true, maxZoom: 14 });
+
+      // Gdy znaleziono lokalizację
+      mapInstance.once('locationfound', function(e) {
+        btn.innerHTML = '<i class="fas fa-crosshairs"></i>'; // Przywróć ikonę
+        
+        // Usuń stary znacznik jeśli jest
+        if (userMarker) mapInstance.removeLayer(userMarker);
+
+        // Dodaj ładną niebieską kropkę "Tu jesteś"
+        const userIcon = L.divIcon({
+          className: 'user-location-marker',
+          iconSize: [20, 20],
+          iconAnchor: [10, 10]
+        });
+
+        userMarker = L.marker(e.latlng, { icon: userIcon }).addTo(mapInstance)
+          .bindPopup("Tu jesteś!").openPopup();
+      });
+
+      // Obsługa błędów (np. użytkownik zablokował GPS)
+      mapInstance.once('locationerror', function(e) {
+        btn.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
+        alert("Nie udało się pobrać lokalizacji. Sprawdź ustawienia GPS.");
+        setTimeout(() => { btn.innerHTML = '<i class="fas fa-crosshairs"></i>'; }, 2000);
+      });
+    }
+
+// --- DEEP LINKING (Zapisywanie filtrów w URL) ---
+
+    // 1. Zapisz obecny stan do adresu URL
+    function updateURL() {
+      const params = new URLSearchParams();
+
+      // Proste pola tekstowe i selecty
+      if (searchInput.value) params.set('q', searchInput.value);
+      if (districtFilter.value) params.set('district', districtFilter.value);
+      if (typeFilter.value) params.set('type', typeFilter.value);
+      if (ratingFilter.value) params.set('rating', ratingFilter.value);
+      
+      // Sortowanie
+      const sortSelect = document.getElementById('sort-select');
+      if (sortSelect && sortSelect.value !== 'default') params.set('sort', sortSelect.value);
+
+      // Ceny
+      if (document.getElementById('price-monthly-max')?.value) params.set('p_mon', document.getElementById('price-monthly-max').value);
+      if (document.getElementById('price-single-max')?.value) params.set('p_sin', document.getElementById('price-single-max').value);
+
+      // Pakiety (Multisport itp.) - zbieramy w jedną listę po przecinku
+      const activePackages = Object.keys(packageFilters).filter(k => packageFilters[k]);
+      if (activePackages.length > 0) params.set('packs', activePackages.join(','));
+
+      // Udogodnienia (Sauna itp.)
+      const activeAmenities = Object.keys(amenityFilters).filter(k => amenityFilters[k]);
+      if (activeAmenities.length > 0) params.set('amenities', activeAmenities.join(','));
+
+      // Podmień adres w przeglądarce (bez przeładowania strony)
+      window.history.replaceState({}, '', `${window.location.pathname}?${params}`);
+    }
+
+    // 2. Odczytaj URL i ustaw filtry (tylko raz przy starcie)
+    function loadFiltersFromURL() {
+      const params = new URLSearchParams(window.location.search);
+      
+      // Przywróć proste pola
+      if (params.has('q')) searchInput.value = params.get('q');
+      if (params.has('district')) districtFilter.value = params.get('district');
+      if (params.has('type')) typeFilter.value = params.get('type');
+      if (params.has('rating')) ratingFilter.value = params.get('rating');
+      
+      if (params.has('sort')) {
+        const sortEl = document.getElementById('sort-select');
+        if (sortEl) sortEl.value = params.get('sort');
+      }
+
+      if (params.has('p_mon')) document.getElementById('price-monthly-max').value = params.get('p_mon');
+      if (params.has('p_sin')) document.getElementById('price-single-max').value = params.get('p_sin');
+
+      // Przywróć Pakiety
+      if (params.has('packs')) {
+        const packs = params.get('packs').split(',');
+        packs.forEach(p => {
+          if (packageFilters.hasOwnProperty(p)) {
+            packageFilters[p] = true;
+            // Zapal wizualnie checkbox
+            const el = document.getElementById(`filter-${p}`);
+            if (el) el.querySelector('.package-checkbox').classList.add('checked');
+          }
+        });
+      }
+
+      // Przywróć Udogodnienia
+      if (params.has('amenities')) {
+        const amens = params.get('amenities').split(',');
+        amens.forEach(a => {
+          if (amenityFilters.hasOwnProperty(a)) {
+            amenityFilters[a] = true;
+            // Zapal wizualnie checkbox
+            const el = document.getElementById(`filter-${a}`);
+            if (el) el.querySelector('.amenity-checkbox').classList.add('checked');
+          }
+        });
+      }
+    }
+
+
+  </script>
+</body>
+</html>
