@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-
+  
 
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-V73ZXDXG3F"></script>
@@ -75,6 +75,7 @@
     }
     
     header {
+      position: relative; /* To jest kluczowe dla ikon social media */
       background: linear-gradient(135deg, var(--primary), var(--secondary));
       color: white;
       padding: 2.5rem 0;
@@ -82,17 +83,23 @@
       box-shadow: var(--shadow-md);
     }
     
-    .header-content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
+.header-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px; /* To chroni wyszukiwarkę przed dotykaniem boków */
+  position: relative;
+  z-index: 2;
+}
     
     h1 {
       font-size: 2.75rem;
       margin-bottom: 0.75rem;
       letter-spacing: -0.5px;
+      margin-top: 2rem;
     }
     
     .subtitle {
@@ -128,17 +135,19 @@
     }
     
     /* Filtry i wyszukiwanie */
-    .filters {
-      background-color: white;
-      padding: 1.5rem;
-      border-radius: var(--radius-md);
-      box-shadow: var(--shadow-sm);
-      margin-bottom: 2rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      align-items: center;
-    }
+.filters {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    /* To wyśrodkuje Twoje selecty (dzielnice, typy, ocena) */
+    justify-content: center; 
+}
     
     .search-box {
       flex: 1;
@@ -497,6 +506,8 @@
       padding: 25px 0;
       border-top: 1px solid var(--gray-light);
     }
+
+    
 
     .package-filter {
       display: flex;
@@ -1814,12 +1825,12 @@
 
 /* Style dla ikon social media w headerze - kwadratowe ze ściętymi rogami */
 .header-social {
-  position: absolute;
-  top: 20px;
-  right: 20px;
+  position: absolute; /* Ikony będą "lewitować" nad tłem */
+  top: 20px;          /* Odstęp od góry strony */
+  right: 20px;         /* Odstęp od prawej krawędzi strony */
   display: flex;
   gap: 12px;
-  z-index: 10;
+  z-index: 10;        /* Wyższa warstwa, żeby nic ich nie przykryło */
 }
 
 .social-btn {
@@ -1848,7 +1859,7 @@
 /* Responsywność dla mniejszych ekranów */
 @media (max-width: 768px) {
   .header-social {
-    top: 15px;
+    top: 10px;
     right: 15px;
     gap: 10px;
   }
@@ -1879,70 +1890,312 @@
   background: rgba(255, 255, 255, 0.9);
 }
 
+/* --- STYLE DLA WYRÓŻNIONEJ SIŁOWNI (CITYFIT) --- */
+
+/* 1. Złota obramówka i poświata */
+.gym-card.featured-gym {
+  border: 2px solid var(--gold);
+  box-shadow: 0 0 20px rgba(255, 193, 7, 0.25); /* Złota poświata */
+  transform: translateY(-5px); /* Lekkie uniesienie na start */
+  z-index: 2; /* Żeby była wyżej niż inne */
+}
+
+/* Efekt po najechaniu na wyróżnioną */
+.gym-card.featured-gym:hover {
+  box-shadow: 0 0 30px rgba(255, 193, 7, 0.4);
+  border-color: var(--gold-dark);
+}
+
+/* 2. Odznaka "Polecane" w lewym górnym rogu */
+.featured-badge {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: #fff;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+/* Nowoczesna pinezka na mapie */
+    .custom-div-icon {
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      border: 2px solid white;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+      display: flex !important; /* Ważne dla centrowania */
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      transition: transform 0.2s ease, background 0.2s;
+    }
+    
+    .custom-div-icon:hover {
+      transform: scale(1.15); /* Lekkie powiększenie po najechaniu */
+      background: var(--secondary);
+      z-index: 1000 !important;
+    }
+
+    /* Styl dymka po najechaniu (Tooltip) */
+    .gym-tooltip {
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid var(--primary-light);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      border-radius: 4px;
+      padding: 2px 8px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--dark);
+    }
+
+    .locate-control {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000; /* Musi być nad mapą */
+      background: white;
+      border: none;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%; /* Kółeczko */
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      cursor: pointer;
+      color: var(--gray-dark);
+      font-size: 1.2rem;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .locate-control:hover {
+      background: var(--primary);
+      color: white;
+      transform: scale(1.1);
+    }
+    
+    /* Pulsująca kropka użytkownika na mapie */
+    .user-location-marker {
+      width: 20px;
+      height: 20px;
+      background: #4285F4;
+      border: 3px solid white;
+      border-radius: 50%;
+      box-shadow: 0 0 0 15px rgba(66, 133, 244, 0.2);
+    }
+
+
+    /* Nowy styl dla wyszukiwarki w nagłówku */
+.hero-search-wrapper {
+  position: relative;
+  max-width: 600px;
+  width: 100%;
+  margin: 1.5rem 0 2.5rem; /* Odstępy od tekstu i statystyk */
+}
+
+.hero-search-input {
+  width: 100%;
+  padding: 16px 20px 16px 50px; /* Miejsce na ikonę lupy */
+  border-radius: 50px; /* Kształt pastylki */
+  border: none;
+  font-size: 1.05rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* Lekki cień */
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.hero-search-input:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.hero-search-icon {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--primary);
+  font-size: 1.1rem;
+  pointer-events: none; /* Żeby kliknięcie w ikonę aktywowało input */
+}
+
+/* Poprawka dla kontenera filtrów po usunięciu starej wyszukiwarki */
+.filters {
+  justify-content: center; /* Wyśrodkowanie pozostałych filtrów */
+}
+
 
   </style>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+  
+  <style>
+    /* Style dla przełącznika widoku */
+    .view-toggle {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    .view-btn {
+      background: white;
+      border: 1px solid var(--gray-light);
+      padding: 10px 20px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s;
+      color: var(--gray-dark);
+    }
+
+    .view-btn:first-child {
+      border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+      border-right: none;
+    }
+
+    .view-btn:last-child {
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    }
+
+    .view-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    #map-container {
+      height: 600px;
+      width: 100%;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--gray-light);
+      margin-bottom: 30px;
+      display: none;
+      z-index: 1;
+      
+      /* --- DODAJ TĘ LINIJKĘ KONIECZNIE: --- */
+      position: relative; 
+    }
+
+    #gym-map {
+      height: 100%;
+      width: 100%;
+    }
+
+    /* Dostosowanie popupów na mapie */
+    .leaflet-popup-content-wrapper {
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-md);
+    }
+    
+    .map-popup-title {
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 5px;
+      font-size: 1.1em;
+    }
+    
+    /* Znajdź i podmień to w sekcji <style> */
+    .map-popup-btn {
+      display: inline-block;
+      margin-top: 10px;
+      background-color: #4361ee; /* Wyraźny niebieski kolor tła */
+      color: #ffffff !important; /* Wymuszony biały kolor tekstu */
+      padding: 6px 14px;
+      border-radius: 20px; /* Nowoczesne zaokrąglenie */
+      text-decoration: none;
+      font-size: 0.85em;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      transition: background-color 0.2s ease;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    /* Dodaj też efekt najechania myszką */
+    .map-popup-btn:hover {
+      background-color: #304ffe; /* Ciemniejszy niebieski po najechaniu */
+      color: #ffffff !important;
+      text-decoration: none;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+  </style>
+  
 </head>
 <body>
+
   <header>
     
-    <div class="container">
-      <div class="header-content">
-      <!-- Dodaj tę nową div-klasę na social media -->
-      <div class="header-social">
-        <a href="https://www.instagram.com/gymmatch.pl/" target="_blank" aria-label="Obserwuj nas na Instagramie" class="social-btn">
-          <i class="fab fa-instagram"></i>
+<div class="header-social">
+        <a href="https://www.instagram.com/gymmatch.pl/" target="_blank" class="social-btn">
+            <i class="fab fa-instagram"></i>
         </a>
-        <a href="https://www.tiktok.com/@gymmatch.pl?_r=1&_d=secCgYIASAHKAESPgo821TvETfrcdkvkb3z%2B%2B0ZD1dwuMM77CxOwgcxCtSSv0U2I1rExbjg90QYCrQomPSlk%2FenUkup7%2Bf46is1GgA%3D&_svg=2&checksum=366252791c207c8b5dd8eb44ea5fd40b7dd2f8ec1c635a0385a4f4a8787cf672&item_author_type=1&sec_uid=MS4wLjABAAAA1q14ZBnMtrkpFnBiYkoxxe3JhgGn4dr_g3k-fUk10BSN3KbremsvzD6jrw8Cls8L&sec_user_id=MS4wLjABAAAA1q14ZBnMtrkpFnBiYkoxxe3JhgGn4dr_g3k-fUk10BSN3KbremsvzD6jrw8Cls8L&share_app_id=1233&share_author_id=7551095660951553046&share_link_id=F68F3C78-4871-4E80-BF7B-24E15DAA4DBA&share_scene=1&sharer_language=en&social_share_type=4&source=h5_m&timestamp=1758129037&tt_from=copy&u_code=emd1kb59m15j2g&ug_btm=b8727%2Cb0&user_id=7551095660951553046&utm_campaign=client_share&utm_medium=ios&utm_source=copy" target="_blank" aria-label="Obserwuj nas na TikTok" class="social-btn">
-          <i class="fab fa-tiktok"></i>
+        <a href="https://www.tiktok.com/@gymmatch.pl" target="_blank" class="social-btn">
+            <i class="fab fa-tiktok"></i>
         </a>
-      </div>
-      <!-- Koniec nowego kodu -->
-        <h1><i class="fas fa-dumbbell" style="margin-right: 12px;"></i> GymMatch</h1>
-        <p class="subtitle">Znajdź idealną siłownię w Krakowie dopasowaną do Twoich potrzeb i preferencji</p>
-        <div class="stats">
-          <div class="stat-card">
-            <i class="fas fa-building"></i>
-            <span id="total-gyms">0</span> obiektów
-          </div>
-          <div class="stat-card">
-            <i class="fas fa-map-marker-alt"></i>
-            <span id="total-areas">0</span> dzielnic
-          </div>
-          <div class="stat-card">
-            <i class="fas fa-id-card"></i>
-            <span id="multisport-count">0</span> z Multisport
-          </div>
-        </div>
-      </div>
     </div>
+
+    <div class="container header-content">
+        <h1><i class="fas fa-dumbbell"></i> GymMatch</h1>
+        <p class="subtitle">Znajdź idealną siłownię w Krakowie dopasowaną do Twoich potrzeb i preferencji</p>
+        
+        <div class="hero-search-wrapper">
+            <i class="fas fa-search hero-search-icon"></i>
+            <input type="text" id="search" class="hero-search-input" placeholder="Wpisz nazwę siłowni, ulicę lub dzielnicę...">
+        </div>
+
+        <div class="stats">
+    <div class="stat-card">
+      <i class="fas fa-building"></i>
+      <span id="total-gyms">0</span> obiektów
+    </div>
+    <div class="stat-card">
+      <i class="fas fa-map-marker-alt"></i>
+      <span id="total-areas">0</span> dzielnic
+    </div>
+    <div class="stat-card">
+      <i class="fas fa-id-card"></i>
+      <span id="multisport-count">0</span> z Multisport
+    </div>
+  </div>
+</div>
   </header>
   
   
   <main class="container">
-    <section class="filters">
-      <div class="search-box">
-        <i class="fas fa-search"></i>
-        <input type="text" id="search" placeholder="Wyszukaj siłownię, adres lub dzielnicę...">
-      </div>
-      
-      <select id="filter-district">
-        <option value="">Wszystkie dzielnice</option>
-      </select>
-      
-      <select id="filter-type">
-        <option value="">Wszystkie typy</option>
-      </select>
+<section class="filters">
+  <select id="filter-district">
+    <option value="">Wszystkie dzielnice</option>
+  </select>
+  
+  <select id="filter-type">
+    <option value="">Wszystkie typy</option>
+  </select>
 
-      <div class="rating-filter">
-        <label for="filter-rating"><i class="fas fa-star"></i> Ocena:</label>
-        <select id="filter-rating">
-          <option value="">Wszystkie</option>
-          <option value="4.5">+4.5 ★</option>
-          <option value="4.0">+4.0 ★</option>
-          <option value="3.5">+3.5 ★</option>
-          <option value="3.0">+3.0 ★</option>
-        </select>
-      </div>
+  <div class="rating-filter">
+    <label for="filter-rating"><i class="fas fa-star"></i> Ocena:</label>
+    <select id="filter-rating">
+      <option value="">Wszystkie</option>
+      <option value="4.5">+4.5 ★</option>
+      <option value="4.0">+4.0 ★</option>
+      <option value="3.5">+3.5 ★</option>
+      <option value="3.0">+3.0 ★</option>
+    </select>
+  </div>
 
       <!-- Filtry pakietów sportowych -->
       <div class="package-filters">
@@ -2061,8 +2314,23 @@
   <i class="fas fa-undo"></i> Wyczyść filtry
 </button>
 
-    </section>
+   </section>
 
+    <div class="view-toggle">
+      <button class="view-btn active" id="view-list-btn" onclick="switchView('list')">
+        <i class="fas fa-list"></i> Lista
+      </button>
+      <button class="view-btn" id="view-map-btn" onclick="switchView('map')">
+        <i class="fas fa-map-marked-alt"></i> Mapa
+      </button>
+    </div>
+
+    <div id="map-container">
+      <div id="gym-map"></div>
+      <button id="locate-btn" class="locate-control" onclick="locateUser()" title="Pokaż moją lokalizację">
+        <i class="fas fa-crosshairs"></i>
+      </button>
+    </div>
     <div id="data-status" style="display: none;"></div>
     
     <section class="gym-grid" id="gym-container"></section>
@@ -2219,7 +2487,7 @@
 
   <script>
     // Konfiguracja
-    const SHEET_ID = '1rXVvELk0DkQ-RhOgsyiZ2rkVbu8DGPDj';
+    const SHEET_ID = "1RpGc5TAPyvwcm7wIx2pGaT6el_-250BKEuO-XZKgXms";
     const SHEET_NAME = 'Kraków';
     
     // Mapa kolumn - zaktualizowana o kolumny z cenami
@@ -2251,8 +2519,12 @@
       CENA_MIESIECZNA: 23,
       CENA_6MIES: 24,
       CENA_ROCZNA: 25,
-      CENA_JEDNORAZOWA: 26,
-      UWAGI_CENOWE: 27
+      CENA_BASIC: 26,
+      CENA_JEDNORAZOWA: 27,
+      CENA_HALF_OPEN: 28,
+      UWAGI_CENOWE: 35,
+      LAT: 36,
+      LON: 37
     };
 
     // Domyślne zdjęcia
@@ -2336,6 +2608,9 @@
         if (!response.ok) throw new Error("Błąd pobierania danych");
         const text = await response.text();
         const json = JSON.parse(text.substr(47).slice(0, -2));
+        console.log("COLS:", json.table.cols.map((c, i) => `${i}: "${c.label}"`));
+        console.log("FIRST ROW:", json.table.rows[0]);
+
         
         gyms = json.table.rows.map((row, index) => {
           const c = row.c || [];
@@ -2344,14 +2619,18 @@
           
           // Przygotowanie danych o cenach
           const pricing = [];
-          if (c[COLUMN_MAP.CENA_MIESIECZNA]?.v) pricing.push({ name: "Miesięczny", price: parseFloat(c[COLUMN_MAP.CENA_MIESIECZNA].v) });
+          if (c[COLUMN_MAP.CENA_MIESIECZNA]?.v) pricing.push({ name: "Miesięczny (odnawialny)", price: parseFloat(c[COLUMN_MAP.CENA_MIESIECZNA].v) });
           if (c[COLUMN_MAP.CENA_6MIES]?.v) pricing.push({ name: "6-miesięczny", price: parseFloat(c[COLUMN_MAP.CENA_6MIES].v) });
+          if (c[COLUMN_MAP.CENA_BASIC]?.v) pricing.push({ name: "Miesięczny", price: parseFloat(c[COLUMN_MAP.CENA_BASIC].v) });
           if (c[COLUMN_MAP.CENA_ROCZNA]?.v) pricing.push({ name: "12-miesięczny", price: parseFloat(c[COLUMN_MAP.CENA_ROCZNA].v) });
+          if (c[COLUMN_MAP.CENA_HALF_OPEN]?.v) pricing.push({ name: "Miesięczny (do 16:00)", price: parseFloat(c[COLUMN_MAP.CENA_HALF_OPEN].v) });
           if (c[COLUMN_MAP.CENA_JEDNORAZOWA]?.v) pricing.push({ name: "Wejściówka", price: parseFloat(c[COLUMN_MAP.CENA_JEDNORAZOWA].v) });
 
           
           return {
             id: index,
+            lat: c[COLUMN_MAP.LAT]?.v ? parseFloat(String(c[COLUMN_MAP.LAT].v).replace(',', '.')) : null,
+            lon: c[COLUMN_MAP.LON]?.v ? parseFloat(String(c[COLUMN_MAP.LON].v).replace(',', '.')) : null,
             name: c[COLUMN_MAP.NAZWA]?.v || '',
             address: c[COLUMN_MAP.ADRES]?.v || '',
             city: c[COLUMN_MAP.MIASTO]?.v || 'Kraków',
@@ -2383,6 +2662,7 @@
 
         updateStats();
         populateFilters();
+        loadFiltersFromURL();
         renderGyms();
       }
       catch(err) {
@@ -2745,15 +3025,37 @@
       document.body.style.overflow = '';
     }
 
-    // Renderowanie kart siłowni
+// Renderowanie kart siłowni
     function renderGyms() {
+      updateURL();
       const filtered = sortData(getFilteredData());
+
+      if (filtered.length === 0) {
+        gymContainer.innerHTML = `
+          <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px;">
+            <i class="fas fa-search" style="font-size: 4rem; margin-bottom: 20px; color: #cbd5e1;"></i>
+            <h3 style="margin-bottom: 10px; color: var(--dark);">Brak wyników</h3>
+            <p style="color: #64748b;">Niestety, żadna siłownia nie spełnia Twoich kryteriów.</p>
+            <button onclick="document.getElementById('reset-filters').click()" style="margin-top: 20px; padding: 10px 20px; background: var(--primary); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 500; transition: background 0.2s;">
+              <i class="fas fa-undo"></i> Wyczyść filtry
+            </button>
+          </div>
+        `;
+        paginationDiv.style.display = 'none'; // Ukryj paginację
+        return; // Zatrzymaj funkcję
+      } else {
+        paginationDiv.style.display = 'flex'; // Przywróć paginację
+      }
+
       const totalPages = Math.ceil(filtered.length / rowsPerPage) || 1;
       if (currentPage > totalPages) currentPage = totalPages;
       const start = (currentPage - 1) * rowsPerPage;
       const pageData = filtered.slice(start, start + rowsPerPage);
 
       gymContainer.innerHTML = pageData.map((g, index) => {
+        // LOGIKA WYRÓŻNIANIA (CityFit)
+        const isCityFit = g.name.toLowerCase().includes('cityfit');
+
         // Przygotuj listę dostępnych udogodnień
         const amenities = [];
         if (g.parking) amenities.push('parking');
@@ -2769,12 +3071,16 @@
         const isCompared = comparedGyms.includes(g.id);
 
         return `
-        <div class="gym-card" style="animation-delay: ${index * 0.05}s">
+        <div class="gym-card ${isCityFit ? 'featured-gym' : ''}" style="animation-delay: ${index * 0.05}s">
           <div class="gym-image" style="background-image: url('${g.image}')">
+            ${isCityFit ? '<div class="featured-badge"><i class="fas fa-crown"></i> Polecane</div>' : ''}
             <span class="gym-type">${getTypeBadge(g.type)}</span>
           </div>
           <div class="gym-content">
-            <h3 class="gym-title">${g.name}</h3>
+            <h3 class="gym-title">
+              ${g.name}
+              ${isCityFit ? '<i class="fas fa-check-circle" style="color:var(--gold); font-size:0.8em; margin-left:5px;" title="Partner Premium"></i>' : ''}
+            </h3>
             <div class="gym-location">
               <i class="fas fa-map-marker-alt"></i>
               <span>${g.district}, ${g.address}</span>
@@ -2790,7 +3096,6 @@
               </div>
             </div>
 
-            <!-- Wyświetl dostępne pakiety sportowe -->
             ${g.multisport || g.medicover || g.pzu || g.fitprofit ? `
               <div class="gym-packages">
                 ${g.multisport ? '<span class="gym-package multisport"><i class="fas fa-id-card"></i> Multisport</span>' : ''}
@@ -2800,7 +3105,6 @@
               </div>
             ` : ''}
 
-            <!-- Wyświetl dostępne udogodnienia -->
             ${amenities.length > 0 ? `
             <div class="gym-amenities">
                 ${amenities.map(amenity => `
@@ -2820,22 +3124,22 @@
             ` : ''}
 
             ${g.pricing && g.pricing.length > 0 ? `
-  <div class="gym-pricing" onclick="openPricingModal(${JSON.stringify(g.pricing)}, '${g.name.replace("'", "\\'")}', '${g.priceNote.replace("'", "\\'")}')">
-    <div class="pricing-title">
-      <i class="fas fa-tag"></i>
-      <span>Ceny karnetów - średnia cena za miesiąc</span>
-    </div>
-    <div class="pricing-grid">
-      ${g.pricing.slice(0, 4).map(price => `
-        <div class="pricing-item">
-          <div class="pricing-name">${price.name}</div>
-          <div class="pricing-price">${Number(price.price).toFixed(2)} zł</div>
-        </div>
-      `).join('')}
-    </div>
-    ${g.priceNote ? `<div class="pricing-note">${g.priceNote}</div>` : ''}
-  </div>
-` : ''}
+              <div class="gym-pricing" onclick="openPricingModal(${JSON.stringify(g.pricing).replace(/"/g, '&quot;')}, '${g.name.replace(/'/g, "\\'")}', '${(g.priceNote || '').replace(/'/g, "\\'")}')">
+                <div class="pricing-title">
+                  <i class="fas fa-tag"></i>
+                  <span>Ceny karnetów:</span>
+                </div>
+                <div class="pricing-grid">
+                  ${g.pricing.slice(0, 6).map(price => `
+                    <div class="pricing-item">
+                      <div class="pricing-name">${price.name}</div>
+                      <div class="pricing-price">${Number(price.price).toFixed(2)} zł</div>
+                    </div>
+                  `).join('')}
+                </div>
+                ${g.priceNote ? `<div class="pricing-note">${g.priceNote}</div>` : ''}
+              </div>
+            ` : ''}
 
             <div class="gym-actions">
               ${g.website ? `
@@ -3163,6 +3467,228 @@ reportForm.addEventListener("submit", e => {
 document.getElementById("close-report-modal").addEventListener("click", closeReportModal);
 document.getElementById("cancel-report").addEventListener("click", closeReportModal);
 document.getElementById("report-close-success").addEventListener("click", closeReportModal);
+  
+// --- OBSŁUGA MAPY ---
+    let mapInstance = null;
+    let markersCluster = [];
+
+    function switchView(view) {
+      const listContainer = document.getElementById('gym-container');
+      const pagination = document.getElementById('pagination');
+      const mapContainer = document.getElementById('map-container');
+      const btnList = document.getElementById('view-list-btn');
+      const btnMap = document.getElementById('view-map-btn');
+
+      if (view === 'list') {
+        listContainer.style.display = 'grid';
+        pagination.style.display = 'flex';
+        mapContainer.style.display = 'none';
+        btnList.classList.add('active');
+        btnMap.classList.remove('active');
+      } else {
+        listContainer.style.display = 'none';
+        pagination.style.display = 'none';
+        mapContainer.style.display = 'block';
+        btnList.classList.remove('active');
+        btnMap.classList.add('active');
+        
+        // Inicjalizuj mapę tylko raz, przy pierwszym otwarciu
+        if (!mapInstance) {
+          initMap();
+        } else {
+          // Naprawia problem z "szarym kafelkiem" przy ponownym otwarciu
+          setTimeout(() => { mapInstance.invalidateSize(); }, 100);
+        }
+      }
+    }
+
+    function initMap() {
+      // Środek Krakowa
+      mapInstance = L.map('gym-map').setView([50.0614, 19.9366], 12);
+
+      // Darmowe kafelki OpenStreetMap
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+      }).addTo(mapInstance);
+
+      updateMapMarkers();
+    }
+
+ function updateMapMarkers() {
+      if (!mapInstance) return;
+
+      // Wyczyść stare markery
+      markersCluster.forEach(m => mapInstance.removeLayer(m));
+      markersCluster = [];
+
+      // Pobierz przefiltrowane dane (te same co na liście)
+      const visibleGyms = getFilteredData();
+
+      visibleGyms.forEach(gym => {
+        // Sprawdzamy czy siłownia ma współrzędne
+        if (gym.lat && gym.lon) {
+          
+          // 1. Tworzymy niestandardową ikonę (kółko z hantelkiem)
+          const customIcon = L.divIcon({
+            className: 'custom-div-icon',
+            html: '<i class="fas fa-dumbbell"></i>',
+            iconSize: [32, 32],
+            iconAnchor: [16, 16], // Wycentrowanie ikony
+            popupAnchor: [0, -16] // Dymek pojawia się nad ikoną
+          });
+
+          const marker = L.marker([gym.lat, gym.lon], { icon: customIcon })
+            .addTo(mapInstance)
+            
+            // 2. Tooltip: Nazwa pojawia się po najechaniu myszką
+            .bindTooltip(gym.name, {
+              permanent: true, 
+              direction: 'top',
+              className: 'gym-tooltip',
+              offset: [0, -20]
+            })
+            
+            // 3. Popup: Pełne info po kliknięciu (Z oceną Google, BEZ ceny)
+            .bindPopup(`
+                <div class="map-popup-title">${gym.name}</div>
+                <div>${gym.address}</div>
+                <div style="font-size:0.9em; color:#666; margin-bottom: 6px;">${gym.type}</div>
+                
+                ${gym.hasReviews ? `
+                  <div style="display:flex; align-items:center; gap:5px; margin-bottom:8px; font-weight:600; color:#4a4a4a;">
+                    <i class="fas fa-star" style="color:#ffc107;"></i> 
+                    <span>${gym.reviewScore}</span>
+                    <span style="color:#999; font-weight:400; font-size:0.85em;">/ 5.0</span>
+                  </div>
+                ` : ''}
+
+                <a href="${gym.website}" target="_blank" class="map-popup-btn">Zobacz stronę</a>
+            `);
+            
+          markersCluster.push(marker);
+        }
+      });
+    }
+
+    // WAŻNE: Podepnij aktualizację markerów pod filtry
+    // Dodaj wywołanie updateMapMarkers() wewnątrz funkcji addEventListeners -> w każdym listenerze,
+    // np. po renderGyms() dodaj updateMapMarkers();  
+
+    // --- LOKALIZACJA UŻYTKOWNIKA ---
+    let userMarker = null;
+
+    function locateUser() {
+      if (!mapInstance) return;
+
+      const btn = document.getElementById('locate-btn');
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>'; // Animacja ładowania
+
+      mapInstance.locate({ setView: true, maxZoom: 14 });
+
+      // Gdy znaleziono lokalizację
+      mapInstance.once('locationfound', function(e) {
+        btn.innerHTML = '<i class="fas fa-crosshairs"></i>'; // Przywróć ikonę
+        
+        // Usuń stary znacznik jeśli jest
+        if (userMarker) mapInstance.removeLayer(userMarker);
+
+        // Dodaj ładną niebieską kropkę "Tu jesteś"
+        const userIcon = L.divIcon({
+          className: 'user-location-marker',
+          iconSize: [20, 20],
+          iconAnchor: [10, 10]
+        });
+
+        userMarker = L.marker(e.latlng, { icon: userIcon }).addTo(mapInstance)
+          .bindPopup("Tu jesteś!").openPopup();
+      });
+
+      // Obsługa błędów (np. użytkownik zablokował GPS)
+      mapInstance.once('locationerror', function(e) {
+        btn.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
+        alert("Nie udało się pobrać lokalizacji. Sprawdź ustawienia GPS.");
+        setTimeout(() => { btn.innerHTML = '<i class="fas fa-crosshairs"></i>'; }, 2000);
+      });
+    }
+
+// --- DEEP LINKING (Zapisywanie filtrów w URL) ---
+
+    // 1. Zapisz obecny stan do adresu URL
+    function updateURL() {
+      const params = new URLSearchParams();
+
+      // Proste pola tekstowe i selecty
+      if (searchInput.value) params.set('q', searchInput.value);
+      if (districtFilter.value) params.set('district', districtFilter.value);
+      if (typeFilter.value) params.set('type', typeFilter.value);
+      if (ratingFilter.value) params.set('rating', ratingFilter.value);
+      
+      // Sortowanie
+      const sortSelect = document.getElementById('sort-select');
+      if (sortSelect && sortSelect.value !== 'default') params.set('sort', sortSelect.value);
+
+      // Ceny
+      if (document.getElementById('price-monthly-max')?.value) params.set('p_mon', document.getElementById('price-monthly-max').value);
+      if (document.getElementById('price-single-max')?.value) params.set('p_sin', document.getElementById('price-single-max').value);
+
+      // Pakiety (Multisport itp.) - zbieramy w jedną listę po przecinku
+      const activePackages = Object.keys(packageFilters).filter(k => packageFilters[k]);
+      if (activePackages.length > 0) params.set('packs', activePackages.join(','));
+
+      // Udogodnienia (Sauna itp.)
+      const activeAmenities = Object.keys(amenityFilters).filter(k => amenityFilters[k]);
+      if (activeAmenities.length > 0) params.set('amenities', activeAmenities.join(','));
+
+      // Podmień adres w przeglądarce (bez przeładowania strony)
+      window.history.replaceState({}, '', `${window.location.pathname}?${params}`);
+    }
+
+    // 2. Odczytaj URL i ustaw filtry (tylko raz przy starcie)
+    function loadFiltersFromURL() {
+      const params = new URLSearchParams(window.location.search);
+      
+      // Przywróć proste pola
+      if (params.has('q')) searchInput.value = params.get('q');
+      if (params.has('district')) districtFilter.value = params.get('district');
+      if (params.has('type')) typeFilter.value = params.get('type');
+      if (params.has('rating')) ratingFilter.value = params.get('rating');
+      
+      if (params.has('sort')) {
+        const sortEl = document.getElementById('sort-select');
+        if (sortEl) sortEl.value = params.get('sort');
+      }
+
+      if (params.has('p_mon')) document.getElementById('price-monthly-max').value = params.get('p_mon');
+      if (params.has('p_sin')) document.getElementById('price-single-max').value = params.get('p_sin');
+
+      // Przywróć Pakiety
+      if (params.has('packs')) {
+        const packs = params.get('packs').split(',');
+        packs.forEach(p => {
+          if (packageFilters.hasOwnProperty(p)) {
+            packageFilters[p] = true;
+            // Zapal wizualnie checkbox
+            const el = document.getElementById(`filter-${p}`);
+            if (el) el.querySelector('.package-checkbox').classList.add('checked');
+          }
+        });
+      }
+
+      // Przywróć Udogodnienia
+      if (params.has('amenities')) {
+        const amens = params.get('amenities').split(',');
+        amens.forEach(a => {
+          if (amenityFilters.hasOwnProperty(a)) {
+            amenityFilters[a] = true;
+            // Zapal wizualnie checkbox
+            const el = document.getElementById(`filter-${a}`);
+            if (el) el.querySelector('.amenity-checkbox').classList.add('checked');
+          }
+        });
+      }
+    }
+
+
   </script>
 </body>
 </html>
