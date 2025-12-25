@@ -2234,6 +2234,42 @@
       font-weight: 600;
     }
 
+    #scroll-top-btn {
+      position: fixed;
+      bottom: 90px; /* Nieco wyżej, żeby nie zasłaniał przycisku "Porównaj" */
+      right: 30px;
+      width: 45px;
+      height: 45px;
+      background-color: var(--dark);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      cursor: pointer;
+      display: none; /* Domyślnie ukryty */
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      z-index: 89; /* Poniżej modali, ale powyżej treści */
+      transition: all 0.3s, transform 0.2s;
+      opacity: 0.8;
+    }
+
+    #scroll-top-btn:hover {
+      background-color: var(--primary);
+      transform: translateY(-3px);
+      opacity: 1;
+    }
+    
+    @media (max-width: 768px) {
+      #scroll-top-btn {
+        right: 20px;
+        bottom: 80px; /* Na mobilce też nad przyciskiem porównania */
+        width: 40px;
+        height: 40px;
+      }
+    }
+
   </style>
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -2579,6 +2615,11 @@
     <section class="gym-grid" id="gym-container"></section>
     
     <div class="pagination" id="pagination"></div>
+
+    <button id="scroll-top-btn" onclick="scrollToTop()" title="Wróć do góry">
+  <i class="fas fa-arrow-up"></i>
+</button>
+
   </main>
 
   <!-- Przycisk otwarcia modala porównania -->
@@ -4137,6 +4178,24 @@ function updateMapMarkers() {
           }
         });
       }
+    }
+
+    // --- SCROLL TO TOP ---
+    const scrollBtn = document.getElementById('scroll-top-btn');
+    
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        scrollBtn.style.display = 'flex';
+      } else {
+        scrollBtn.style.display = 'none';
+      }
+    });
+
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
     }
 
 
