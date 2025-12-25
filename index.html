@@ -302,13 +302,15 @@
       font-size: 0.95rem;
     }
     
-    .gym-stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+.gym-stats {
+      display: flex;
+      flex-wrap: wrap;
       gap: 15px;
       margin: 20px 0;
+      row-gap: 10px; /* Odstęp jeśli spadnie do nowej linii */
     }
     
+    /* Opcjonalnie: upewnij się, że staty mają ładny odstęp */
     .stat {
       display: flex;
       align-items: center;
@@ -1334,6 +1336,32 @@
       gap: 0.5rem;
     }
 
+    /* Styl dla filtra sortowania */
+    .sort-filter {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .sort-filter select {
+      min-width: 140px; /* Nieco szerszy niż inne */
+    }
+    .sort-filter label {
+      font-size: 0.95rem;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    
+    /* Mała poprawka responsywności dla filtrów */
+    @media (max-width: 600px) {
+      .rating-filter, .sort-filter {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .rating-filter select, .sort-filter select {
+        width: 60%;
+      }
+    }
+
     .rating-filter select {
       min-width: 120px;
     }
@@ -2155,29 +2183,55 @@
       color: #ff4757; /* Czerwony */
     }
     
-    /* Przycisk filtra "Pokaż ulubione" */
+/* Przycisk filtra "Pokaż ulubione" */
     .show-fav-btn {
-      background: white;
-      border: 1px solid #ff4757;
+      background-color: #ffe5e7;
       color: #ff4757;
-      padding: 10px 15px;
+      border: none;
+      padding: 12px 20px;
       border-radius: var(--radius-sm);
       cursor: pointer;
-      font-weight: 600;
+      
+      /* TU JEST ZMIANA: */
+      font-size: 0.93rem;  /* To ustawia wielkość liter (taką jak w przycisku obok) */
+      font-weight: 500;    /* To ustawia "grubość" liter */
+      
       display: flex;
       align-items: center;
       gap: 8px;
       transition: all 0.2s;
+      margin-right: 10px;
     }
-    
+
+    .show-fav-btn:hover {
+      background-color: #ffccd0;
+      transform: translateY(-1px);
+    }
+
     .show-fav-btn.active {
-      background: #ff4757;
+      background-color: #ff4757;
       color: white;
+      box-shadow: 0 4px 10px rgba(255, 71, 87, 0.3);
     }
 
     /* Przesuń odznakę "Polecane" trochę w prawo, żeby nie kolidowała z sercem */
     .featured-badge {
        left: 60px !important; 
+    }
+
+
+    /* Styl dla licznika odległości */
+    .gym-distance {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.85rem;
+      color: var(--primary); /* Lub var(--success) dla zielonego */
+      background: var(--primary-lighter);
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-left: 10px;
+      font-weight: 600;
     }
 
   </style>
@@ -2296,7 +2350,7 @@
 
     <div class="container header-content">
         <h1><i class="fas fa-dumbbell"></i> GymMatch</h1>
-        <p class="subtitle">Znajdź idealną siłownię w Krakowie dopasowaną do Twoich potrzeb i preferencji</p>
+        <p class="subtitle">Znajdź swoją idealną siłownię w Krakowie dopasowaną do Twoich potrzeb i preferencji.</p>
         
         <div class="hero-search-wrapper">
             <i class="fas fa-search hero-search-icon"></i>
@@ -2339,6 +2393,17 @@
       <option value="4.0">+4.0 ★</option>
       <option value="3.5">+3.5 ★</option>
       <option value="3.0">+3.0 ★</option>
+    </select>
+  </div>
+
+  <div class="sort-filter" style="margin-left: 10px;">
+    <label for="sort-select"><i class="fas fa-sort"></i> Sortuj:</label>
+    <select id="sort-select">
+      <option value="default">Domyślnie</option>
+      <option value="price_asc">Cena: najniższa</option>
+      <option value="price_desc">Cena: najwyższa</option>
+      <option value="rating_desc">Ocena: najwyższa</option>
+      <option value="name_asc">Nazwa: A-Z</option>
     </select>
   </div>
 
@@ -2455,7 +2520,11 @@
 </div>
 
 <button id="fav-filter-btn" class="show-fav-btn" onclick="toggleFavFilter()">
-  <i class="fas fa-heart"></i> Tylko ulubione <span id="fav-count">(0)</span>
+  <i class="fas fa-heart"></i> Pokaż ulubione <span id="fav-count">(0)</span>
+</button>
+
+<button id="locate-list-btn" class="reset-btn" onclick="locateUser()" style="margin-right: 10px; background-color: var(--primary-lighter); color: var(--primary);">
+  <i class="fas fa-location-arrow"></i> Lokalizuj mnie
 </button>
 
 <button id="reset-filters" class="reset-btn">
@@ -2712,6 +2781,7 @@
     // Zmienne globalne
     let favorites = JSON.parse(localStorage.getItem('gymFavorites')) || []; // Wczytaj z pamięci
     let showOnlyFavorites = false; // Czy filtr jest włączony
+    let userLocation = null; // Tutaj zapiszemy pozycję użytkownika
     let gyms = [];
     let currentPage = 1;
     const rowsPerPage = 12;
@@ -2853,6 +2923,18 @@
       document.getElementById('multisport-count').textContent = gyms.filter(g => g.multisport).length;
     }
 
+    // Obliczanie dystansu między dwoma punktami (w km)
+    function calculateDistance(lat1, lon1, lat2, lon2) {
+      const R = 6371; // Promień Ziemi w km
+      const dLat = (lat2 - lat1) * (Math.PI / 180);
+      const dLon = (lon2 - lon1) * (Math.PI / 180);
+      const a = 
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) * Math.sin(dLon / 2) * Math.sin(dLon / 2); 
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)); 
+      return (R * c).toFixed(1); // Zwraca wynik z 1 miejscem po przecinku (np. "2.4")
+    }
+
     // Inicjalizacja filtrów
     function populateFilters() {
       // Wyczyść istniejące opcje (zachowaj pierwszą)
@@ -2962,26 +3044,48 @@
       });
     }
 
-    // Sortowanie danych
+// Sortowanie danych (Zaktualizowane)
     function sortData(data) {
       if (!currentSort.column) return data;
       
       return data.slice().sort((a, b) => {
+        // 1. Logika dla ceny (wybieramy najniższą dostępną cenę w obiekcie)
+        if (currentSort.column === 'price') {
+           const getMinPrice = (gym) => {
+             if (!gym.pricing || gym.pricing.length === 0) return Infinity; // Brak ceny = na koniec
+             // Znajdź najniższą cenę w cenniku danej siłowni
+             return Math.min(...gym.pricing.map(p => p.price));
+           };
+           
+           let priceA = getMinPrice(a);
+           let priceB = getMinPrice(b);
+           
+           if (priceA === Infinity && priceB === Infinity) return 0;
+           if (priceA === Infinity) return 1; 
+           if (priceB === Infinity) return -1;
+           
+           return (priceA - priceB) * (currentSort.asc ? 1 : -1);
+        }
+
+        // 2. Logika dla oceny (liczby)
+        if (currentSort.column === 'reviewScore') {
+             let valA = (a.reviewScore === '-' || !a.reviewScore) ? -1 : parseFloat(a.reviewScore);
+             let valB = (b.reviewScore === '-' || !b.reviewScore) ? -1 : parseFloat(b.reviewScore);
+             return (valA - valB) * (currentSort.asc ? 1 : -1);
+        }
+
+        // 3. Logika dla tekstu (nazwa)
         let A = a[currentSort.column];
         let B = b[currentSort.column];
         
-        if (currentSort.column === 'area' || currentSort.column === 'capacity') {
-          A = A || 0;
-          B = B || 0;
-          return (A - B) * (currentSort.asc ? 1 : -1);
-        }
+        A = (typeof A === 'string') ? A.toLowerCase() : (A || '');
+        B = (typeof B === 'string') ? B.toLowerCase() : (B || '');
         
-        A = typeof A === 'string' ? A.toLowerCase() : A;
-        B = typeof B === 'string' ? B.toLowerCase() : B;
-        return (A < B ? -1 : A > B ? 1 : 0) * (currentSort.asc ? 1 : -1);
+        if (A < B) return -1 * (currentSort.asc ? 1 : -1);
+        if (A > B) return 1 * (currentSort.asc ? 1 : -1);
+        return 0;
       });
     }
-
     // Generowanie znacznika typu
     function getTypeBadge(type) {
       if (type === 'Klub fitness') return 'FITNESS';
@@ -3315,19 +3419,27 @@
               ${g.name}
               ${isCityFit ? '<i class="fas fa-check-circle" style="color:var(--gold); font-size:0.8em; margin-left:5px;" title="Partner Premium"></i>' : ''}
             </h3>
-            <div class="gym-location">
+           <div class="gym-location">
               <i class="fas fa-map-marker-alt"></i>
               <span>${g.district}, ${g.address}</span>
             </div>
-            <div class="gym-stats">
+        <div class="gym-stats">
               <div class="stat">
                 <i class="fas fa-ruler-combined"></i>
                 <span>${g.area || '-'} m²</span>
               </div>
               <div class="stat">
                 <i class="fas fa-users"></i>
-                <span>${g.capacity || '-'} osób/dzień</span>
+                <span>${g.capacity || '-'} os.</span>
               </div>
+              
+              ${userLocation && g.lat && g.lon ? `
+              <div class="stat" style="color: var(--primary); font-weight: 600;">
+                <i class="fas fa-location-arrow" style="background: var(--primary-lighter);"></i>
+                <span>${calculateDistance(userLocation.lat, userLocation.lng, g.lat, g.lon)} km</span>
+              </div>
+              ` : ''}
+              
             </div>
 
             ${g.multisport || g.medicover || g.pzu || g.fitprofit ? `
@@ -3486,103 +3598,132 @@
     }
 
     // Dodanie listenerów
-// Dodanie listenerów
-function addEventListeners() {
-  searchInput.addEventListener('input', () => {
-    currentPage = 1;
-    renderGyms();
-  });
-
-  districtFilter.addEventListener('change', () => {
-    currentPage = 1;
-    renderGyms();
-  });
-
-  typeFilter.addEventListener('change', () => {
-    currentPage = 1;
-    renderGyms();
-  });
-
-  ratingFilter.addEventListener('change', () => {
-    currentPage = 1;
-    renderGyms();
-  });
-
-  // Filtry cenowe
-  ['price-monthly-max', 'price-6m-max', 'price-yearly-max', 'price-single-max'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.addEventListener('input', () => {
+// Dodanie listenerów (NOWA WERSJA)
+    function addEventListeners() {
+      // 1. Wyszukiwarka
+      searchInput.addEventListener('input', () => {
         currentPage = 1;
         renderGyms();
       });
-    }
-  });
 
-  resetBtn.addEventListener('click', () => {
-  searchInput.value = '';
-  districtFilter.value = '';
-  typeFilter.value = '';
-  ratingFilter.value = '';
+      // 2. Filtry podstawowe
+      districtFilter.addEventListener('change', () => {
+        currentPage = 1;
+        renderGyms();
+      });
 
-  // Resetuj checkboxy pakietów
-  document.querySelectorAll('.package-checkbox').forEach(cb => cb.classList.remove('checked'));
-  packageFilters = { multisport: false, medicover: false, pzu: false, fitprofit: false };
+      typeFilter.addEventListener('change', () => {
+        currentPage = 1;
+        renderGyms();
+      });
 
-  // Resetuj checkboxy udogodnień
-  document.querySelectorAll('.amenity-checkbox').forEach(cb => cb.classList.remove('checked'));
-  amenityFilters = {
-    parking: false, sauna: false, machines: false, wifi: false,
-    open24h: false, pool: false, groupClasses: false, jacuzzi: false
-  };
+      ratingFilter.addEventListener('change', () => {
+        currentPage = 1;
+        renderGyms();
+      });
 
-  // Reset cenowych inputów (punkt e)
-  [
-    'price-monthly-min','price-monthly-max',
-    'price-6m-min','price-6m-max',
-    'price-yearly-min','price-yearly-max',
-    'price-single-min','price-single-max'
-  ].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.value = '';
-  });
+      // 3. Filtry cenowe
+      ['price-monthly-max', 'price-6m-max', 'price-yearly-max', 'price-single-max'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.addEventListener('input', () => {
+            currentPage = 1;
+            renderGyms();
+          });
+        }
+      });
 
-  currentPage = 1;
-  renderGyms();
-});
+      // 4. Przycisk RESET
+      resetBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        districtFilter.value = '';
+        typeFilter.value = '';
+        ratingFilter.value = '';
 
+        // Reset checkboxy pakietów
+        document.querySelectorAll('.package-checkbox').forEach(cb => cb.classList.remove('checked'));
+        packageFilters = { multisport: false, medicover: false, pzu: false, fitprofit: false };
 
-  clearComparisonBtn.addEventListener('click', clearComparison);
-  openCompareBtn.addEventListener('click', openCompareModal);
-  closeModalBtn.addEventListener('click', closeCompareModal);
-  closePricingModalBtn.addEventListener('click', closePricingModal);
+        // Reset checkboxy udogodnień
+        document.querySelectorAll('.amenity-checkbox').forEach(cb => cb.classList.remove('checked'));
+        amenityFilters = {
+          parking: false, sauna: false, machines: false, wifi: false,
+          open24h: false, pool: false, groupClasses: false, jacuzzi: false
+        };
 
-  // Zamknij modal porównania po kliknięciu na backdrop
-  compareModal.addEventListener('click', (e) => {
-    if (e.target === compareModal) {
-      closeCompareModal();
-    }
-  });
+        // Reset cen
+        [
+          'price-monthly-max', 'price-6m-max', 'price-yearly-max', 'price-single-max'
+        ].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.value = '';
+        });
 
-  // Zamknij modal cen po kliknięciu na backdrop
-  pricingModalElement.addEventListener('click', (e) => {
-    if (e.target === pricingModalElement) {
-      closePricingModal();
-    }
-  });
+        // Reset sortowania (NOWE)
+        const sortSelect = document.getElementById('sort-select');
+        if (sortSelect) sortSelect.value = 'default';
+        currentSort = { column: null, asc: true };
 
-  // Zamknij modale klawiszem ESC
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      if (compareModal.classList.contains('active')) {
-        closeCompareModal();
+        currentPage = 1;
+        renderGyms();
+      });
+
+      // 5. Obsługa Modali
+      clearComparisonBtn.addEventListener('click', clearComparison);
+      openCompareBtn.addEventListener('click', openCompareModal);
+      closeModalBtn.addEventListener('click', closeCompareModal);
+      closePricingModalBtn.addEventListener('click', closePricingModal);
+
+      // Zamknij modal porównania po kliknięciu na tło
+      compareModal.addEventListener('click', (e) => {
+        if (e.target === compareModal) {
+          closeCompareModal();
+        }
+      });
+
+      // Zamknij modal cen po kliknięciu na tło
+      pricingModalElement.addEventListener('click', (e) => {
+        if (e.target === pricingModalElement) {
+          closePricingModal();
+        }
+      });
+
+      // Zamknij modale klawiszem ESC
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          if (compareModal.classList.contains('active')) {
+            closeCompareModal();
+          }
+          if (pricingModalElement.classList.contains('active')) {
+            closePricingModal();
+          }
+        }
+      });
+
+      // 6. NOWE: Obsługa sortowania (TEGO BRAKOWAŁO)
+      const sortSelect = document.getElementById('sort-select');
+      if (sortSelect) {
+        sortSelect.addEventListener('change', (e) => {
+          const val = e.target.value;
+          
+          currentPage = 1; // Wróć na 1 stronę
+
+          if (val === 'default') {
+            currentSort = { column: null, asc: true };
+          } else if (val === 'price_asc') {
+            currentSort = { column: 'price', asc: true };
+          } else if (val === 'price_desc') {
+            currentSort = { column: 'price', asc: false };
+          } else if (val === 'rating_desc') {
+            currentSort = { column: 'reviewScore', asc: false };
+          } else if (val === 'name_asc') {
+            currentSort = { column: 'name', asc: true };
+          }
+          
+          renderGyms();
+        });
       }
-      if (pricingModalElement.classList.contains('active')) {
-        closePricingModal();
-      }
     }
-  });
-}
 
 
     // Automatyczne odświeżanie co 5 minut
@@ -3831,39 +3972,93 @@ function updateMapMarkers() {
     // np. po renderGyms() dodaj updateMapMarkers();  
 
     // --- LOKALIZACJA UŻYTKOWNIKA ---
+   // --- LOKALIZACJA UŻYTKOWNIKA (Z DIAGNOSTYKĄ) ---
+// --- LOKALIZACJA UŻYTKOWNIKA (OBSŁUGA DWÓCH PRZYCISKÓW) ---
     let userMarker = null;
 
     function locateUser() {
-      if (!mapInstance) return;
+      if (!mapInstance) {
+        // Jeśli mapa nie jest zainicjowana (jesteśmy na liście), zainicjuj ją w tle
+        initMap(); 
+      }
 
-      const btn = document.getElementById('locate-btn');
-      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>'; // Animacja ładowania
+      const btnMap = document.getElementById('locate-btn');      // Przycisk na mapie
+      const btnList = document.getElementById('locate-list-btn'); // Przycisk na liście
+      
+      // Funkcja pomocnicza do zmiany ikony na obu przyciskach naraz
+      const setButtonsHtml = (html) => {
+        if (btnMap) btnMap.innerHTML = html;
+        if (btnList) btnList.innerHTML = html;
+      };
 
-      mapInstance.locate({ setView: true, maxZoom: 14 });
+      // Zabezpieczenie przed podwójnym kliknięciem
+      if (btnList && btnList.innerHTML.includes('fa-spinner')) return;
 
-      // Gdy znaleziono lokalizację
-      mapInstance.once('locationfound', function(e) {
-        btn.innerHTML = '<i class="fas fa-crosshairs"></i>'; // Przywróć ikonę
+      // Start animacji
+      setButtonsHtml('<i class="fas fa-spinner fa-spin"></i>'); 
+
+      // 1. SUKCES
+      const onLocationFound = function(e) {
+        // Zmień ikonę na "ptaszek" lub celownik
+        if (btnMap) btnMap.innerHTML = '<i class="fas fa-crosshairs"></i>';
+        if (btnList) btnList.innerHTML = '<i class="fas fa-check"></i> Zlokalizowano';
         
-        // Usuń stary znacznik jeśli jest
-        if (userMarker) mapInstance.removeLayer(userMarker);
+        // Zmień styl przycisku na liście na zielony (sukces)
+        if (btnList) {
+            btnList.style.backgroundColor = 'var(--success)';
+            btnList.style.color = 'white';
+        }
 
-        // Dodaj ładną niebieską kropkę "Tu jesteś"
+        // Obsługa znacznika na mapie
+        if (userMarker) mapInstance.removeLayer(userMarker);
         const userIcon = L.divIcon({
           className: 'user-location-marker',
           iconSize: [20, 20],
           iconAnchor: [10, 10]
         });
-
         userMarker = L.marker(e.latlng, { icon: userIcon }).addTo(mapInstance)
           .bindPopup("Tu jesteś!").openPopup();
-      });
 
-      // Obsługa błędów (np. użytkownik zablokował GPS)
-      mapInstance.once('locationerror', function(e) {
-        btn.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
-        alert("Nie udało się pobrać lokalizacji. Sprawdź ustawienia GPS.");
-        setTimeout(() => { btn.innerHTML = '<i class="fas fa-crosshairs"></i>'; }, 2000);
+        // Zapisz lokalizację i odśwież listę (pojawią się km)
+        userLocation = e.latlng;
+        renderGyms();
+      };
+
+      // 2. BŁĄD
+      const onLocationError = function(e) {
+        setButtonsHtml('<i class="fas fa-exclamation-triangle"></i>');
+        console.error("Błąd lokalizacji:", e); 
+
+        let msg = "Wystąpił nieznany błąd lokalizacji.";
+        if (e.code === 1) msg = "⛔ Odmówiono dostępu do lokalizacji.";
+        else if (e.code === 2) msg = "📡 Nie można ustalić pozycji.";
+        else if (e.code === 3) msg = "⏱️ Przekroczono limit czasu.";
+        
+        if (window.location.protocol === 'file:') {
+             msg = "⚠️ Lokalizacja nie działa na plikach lokalnych (file://).";
+        }
+
+        alert(msg);
+        
+        // Reset przycisków po 3 sekundach
+        setTimeout(() => { 
+            if (btnMap) btnMap.innerHTML = '<i class="fas fa-crosshairs"></i>';
+            if (btnList) {
+                btnList.innerHTML = '<i class="fas fa-location-arrow"></i> Oblicz odległość';
+                btnList.style.backgroundColor = 'var(--primary-lighter)';
+                btnList.style.color = 'var(--primary)';
+            }
+        }, 3000);
+      };
+
+      mapInstance.once('locationfound', onLocationFound);
+      mapInstance.once('locationerror', onLocationError);
+
+      mapInstance.locate({ 
+        setView: false, // WAŻNE: Nie przesuwaj mapy jeśli jesteśmy na liście (żeby nie mieszać w tle)
+        maxZoom: 14,
+        timeout: 10000,
+        enableHighAccuracy: true 
       });
     }
 
