@@ -2034,6 +2034,151 @@
   justify-content: center; /* Wyśrodkowanie pozostałych filtrów */
 }
 
+/* --- LEGENDA NAD MAPĄ --- */
+    .map-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+      margin-bottom: 15px;
+      background: white;
+      padding: 10px 15px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--gray-light);
+      box-shadow: var(--shadow-sm);
+      display: none; /* Domyślnie ukryta, JS ją pokaże tylko przy mapie */
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--gray-dark);
+    }
+
+    .legend-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    /* --- KOLORY MAREK (Zaktualizowane) --- */
+        
+    /* --- KOLORY MAREK (Marker + Legenda) --- */
+    
+    /* CityFit: Różowo-niebieski (Gradient) */
+    .brand-cityfit {
+      background: linear-gradient(135deg, #ff00cc, #3333ff) !important;
+      color: white !important;
+      border-color: white !important;
+    }
+
+    /* My Fitness Place: Błękitny (Jasno niebieski) + Biały */
+    .brand-mfp {
+      background-color: #38b6ff !important; /* Wyraźny błękit */
+      color: white !important;              /* Biała ikona */
+      border-color: white !important;       /* Biała obwódka */
+    }
+
+    /* Well Fitness: Limonka (Stary kolor MFP) */
+    .brand-well {
+      background-color: #cddc39 !important; /* Limonka */
+      color: #4a4a4a !important;            /* Ciemna ikona dla kontrastu */
+      border-color: #4a4a4a !important;
+    }
+
+    /* Fitness Platinium: Czarny */
+    .brand-platinium {
+      background-color: #000000 !important;
+      color: white !important;
+      border-color: white !important;
+    }
+
+    /* XXS Gym: Ciemno żółty */
+    .brand-xxs {
+      background-color: #fbc02d !important;
+      color: white !important;
+      border-color: white !important;
+    }
+
+    /* Inne: Szary */
+    .brand-default {
+      background-color: #9e9e9e !important;
+      color: white !important;
+      border-color: white !important;
+    }
+
+    /* Styl komentarza pod mapą */
+    .map-disclaimer {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--gray-dark);
+      margin-top: 10px;
+      margin-bottom: 25px;
+      font-style: italic;
+      display: none; /* Domyślnie ukryty, pokażemy go razem z mapą */
+    }
+
+    /* Przycisk ulubione (Serduszko) */
+    .fav-btn {
+      position: absolute;
+      top: 15px;
+      right: 15px; /* Było left, dajmy na prawo obok typu */
+      right: auto; 
+      left: 15px;
+      background: white;
+      border: none;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      transition: all 0.2s;
+      z-index: 10;
+      font-size: 1.1rem;
+      color: #ccc; /* Domyślny szary */
+    }
+
+    .fav-btn:hover {
+      transform: scale(1.1);
+    }
+
+    /* Aktywne serduszko */
+    .fav-btn.active {
+      color: #ff4757; /* Czerwony */
+    }
+    
+    /* Przycisk filtra "Pokaż ulubione" */
+    .show-fav-btn {
+      background: white;
+      border: 1px solid #ff4757;
+      color: #ff4757;
+      padding: 10px 15px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    
+    .show-fav-btn.active {
+      background: #ff4757;
+      color: white;
+    }
+
+    /* Przesuń odznakę "Polecane" trochę w prawo, żeby nie kolidowała z sercem */
+    .featured-badge {
+       left: 60px !important; 
+    }
 
   </style>
 
@@ -2309,6 +2454,9 @@
   </div>
 </div>
 
+<button id="fav-filter-btn" class="show-fav-btn" onclick="toggleFavFilter()">
+  <i class="fas fa-heart"></i> Tylko ulubione <span id="fav-count">(0)</span>
+</button>
 
 <button id="reset-filters" class="reset-btn">
   <i class="fas fa-undo"></i> Wyczyść filtry
@@ -2325,12 +2473,38 @@
       </button>
     </div>
 
+  <div class="map-legend" id="map-legend">
+      <div class="legend-item">
+        <div class="legend-dot brand-cityfit"></div> CityFit
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot brand-mfp"></div> My Fitness Place
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot brand-well"></div> Well Fitness
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot brand-platinium"></div> Fitness Platinium
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot brand-xxs"></div> XXS Gym
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot brand-default"></div> Inne
+      </div>
+    </div>
+
     <div id="map-container">
       <div id="gym-map"></div>
       <button id="locate-btn" class="locate-control" onclick="locateUser()" title="Pokaż moją lokalizację">
         <i class="fas fa-crosshairs"></i>
       </button>
     </div>
+
+    <p id="map-note" class="map-disclaimer">
+      <i class="fas fa-info-circle"></i> Aby zachować czytelność, mapa prezentuje wyłącznie lokalizacje największych wybranych klubów fitness.
+    </p>
+
     <div id="data-status" style="display: none;"></div>
     
     <section class="gym-grid" id="gym-container"></section>
@@ -2536,6 +2710,8 @@
     };
 
     // Zmienne globalne
+    let favorites = JSON.parse(localStorage.getItem('gymFavorites')) || []; // Wczytaj z pamięci
+    let showOnlyFavorites = false; // Czy filtr jest włączony
     let gyms = [];
     let currentPage = 1;
     const rowsPerPage = 12;
@@ -2777,6 +2953,9 @@
           if (price == null || price > singleMax) return false;
         }
 
+        if (showOnlyFavorites) {
+          if (!favorites.includes(g.id)) return false;
+        }
 
 
         return matchSearch && matchDistrict && matchType && matchTypeCheckbox && matchRating && matchPackages && matchAmenities;
@@ -3025,9 +3204,57 @@
       document.body.style.overflow = '';
     }
 
+    // --- LOGIKA ULUBIONYCH (SYSTEM SERDUSZEK) ---
+
+    // 1. Przełączanie serduszka dla konkretnej siłowni
+    function toggleFavorite(id, event) {
+      if(event) {
+        event.stopPropagation(); // Zapobiega kliknięciu w całą kartę
+        event.preventDefault();  // Zapobiega przeładowaniu jeśli to button
+      }
+      
+      const index = favorites.indexOf(id);
+      if (index === -1) {
+        favorites.push(id); // Dodaj do listy
+      } else {
+        favorites.splice(index, 1); // Usuń z listy
+      }
+      
+      // Zapisz zmiany w pamięci przeglądarki
+      localStorage.setItem('gymFavorites', JSON.stringify(favorites));
+      
+      // Odśwież widok
+      updateFavCount();
+      renderGyms(); // Przerysowanie, żeby zmienić kolor serca
+    }
+
+    // 2. Włączanie/wyłączanie filtra "Tylko ulubione"
+    function toggleFavFilter() {
+      showOnlyFavorites = !showOnlyFavorites;
+      
+      const btn = document.getElementById('fav-filter-btn');
+      if (btn) {
+        if (showOnlyFavorites) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      }
+      
+      currentPage = 1; // Wróć na 1 stronę
+      renderGyms(); // Przerysuj listę z nowym filtrem
+    }
+
+    // 3. Aktualizacja licznika na przycisku
+    function updateFavCount() {
+      const countSpan = document.getElementById('fav-count');
+      if(countSpan) countSpan.textContent = `(${favorites.length})`;
+    }
+
 // Renderowanie kart siłowni
     function renderGyms() {
       updateURL();
+      updateMapMarkers();
       const filtered = sortData(getFilteredData());
 
       if (filtered.length === 0) {
@@ -3069,10 +3296,17 @@
 
         // Sprawdź czy siłownia jest w porównaniu
         const isCompared = comparedGyms.includes(g.id);
+        // --- NOWE: Sprawdź czy ulubiona ---
+        const isFav = favorites.includes(g.id);
 
-        return `
+     return `
         <div class="gym-card ${isCityFit ? 'featured-gym' : ''}" style="animation-delay: ${index * 0.05}s">
           <div class="gym-image" style="background-image: url('${g.image}')">
+            
+            <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFavorite(${g.id}, event)" title="${isFav ? 'Usuń z ulubionych' : 'Dodaj do ulubionych'}">
+               <i class="${isFav ? 'fas' : 'far'} fa-heart"></i>
+            </button>
+            
             ${isCityFit ? '<div class="featured-badge"><i class="fas fa-crown"></i> Polecane</div>' : ''}
             <span class="gym-type">${getTypeBadge(g.type)}</span>
           </div>
@@ -3141,10 +3375,10 @@
               </div>
             ` : ''}
 
-            <div class="gym-actions">
+ <div class="gym-actions">
               ${g.website ? `
                 <a href="${g.website}" target="_blank" class="gym-link">
-                  <i class="fas fa-external-link-alt"></i> Odwiedź stronę
+                  <i class="fas fa-external-link-alt"></i> Strona
                 </a>
               ` : ''}
 
@@ -3367,9 +3601,12 @@ function addEventListeners() {
       setupAmenityToggles();
       addEventListeners();
       updateCompareUI();
+      updateFavCount();
     });
 
     // Umożliwia wywoływanie funkcji z poziomu HTML
+    window.toggleFavorite = toggleFavorite;
+    window.toggleFavFilter = toggleFavFilter;
     window.toggleCompare = toggleCompare;
     window.openPricingModal = openPricingModal;
 
@@ -3472,10 +3709,13 @@ document.getElementById("report-close-success").addEventListener("click", closeR
     let mapInstance = null;
     let markersCluster = [];
 
-    function switchView(view) {
+function switchView(view) {
       const listContainer = document.getElementById('gym-container');
       const pagination = document.getElementById('pagination');
       const mapContainer = document.getElementById('map-container');
+      const legendContainer = document.getElementById('map-legend');
+      const mapNote = document.getElementById('map-note'); // <--- NOWE
+      
       const btnList = document.getElementById('view-list-btn');
       const btnMap = document.getElementById('view-map-btn');
 
@@ -3483,20 +3723,24 @@ document.getElementById("report-close-success").addEventListener("click", closeR
         listContainer.style.display = 'grid';
         pagination.style.display = 'flex';
         mapContainer.style.display = 'none';
+        if (legendContainer) legendContainer.style.display = 'none';
+        if (mapNote) mapNote.style.display = 'none'; // <--- UKRYJ NOTATKĘ
+        
         btnList.classList.add('active');
         btnMap.classList.remove('active');
       } else {
         listContainer.style.display = 'none';
         pagination.style.display = 'none';
         mapContainer.style.display = 'block';
+        if (legendContainer) legendContainer.style.display = 'flex';
+        if (mapNote) mapNote.style.display = 'block'; // <--- POKAŻ NOTATKĘ
+        
         btnList.classList.remove('active');
         btnMap.classList.add('active');
         
-        // Inicjalizuj mapę tylko raz, przy pierwszym otwarciu
         if (!mapInstance) {
           initMap();
         } else {
-          // Naprawia problem z "szarym kafelkiem" przy ponownym otwarciu
           setTimeout(() => { mapInstance.invalidateSize(); }, 100);
         }
       }
@@ -3514,41 +3758,50 @@ document.getElementById("report-close-success").addEventListener("click", closeR
       updateMapMarkers();
     }
 
- function updateMapMarkers() {
+function updateMapMarkers() {
       if (!mapInstance) return;
 
-      // Wyczyść stare markery
       markersCluster.forEach(m => mapInstance.removeLayer(m));
       markersCluster = [];
 
-      // Pobierz przefiltrowane dane (te same co na liście)
       const visibleGyms = getFilteredData();
 
       visibleGyms.forEach(gym => {
-        // Sprawdzamy czy siłownia ma współrzędne
         if (gym.lat && gym.lon) {
           
-          // 1. Tworzymy niestandardową ikonę (kółko z hantelkiem)
+          // --- LOGIKA KOLORÓW ---
+          let brandClass = 'brand-default';
+          const nameLower = (gym.name || '').toLowerCase();
+
+          if (nameLower.includes('cityfit')) {
+            brandClass = 'brand-cityfit';
+          } else if (nameLower.includes('my fitness place') || nameLower.includes('myfitnessplace')) {
+            brandClass = 'brand-mfp';
+          } else if (nameLower.includes('well fitness') || nameLower.includes('wellfitness')) {
+            brandClass = 'brand-well'; // <--- NOWE: Well Fitness
+          } else if (nameLower.includes('platinium') || nameLower.includes('platinum')) {
+            brandClass = 'brand-platinium';
+          } else if (nameLower.includes('xxs')) {
+            brandClass = 'brand-xxs';
+          }
+          // -----------------------
+
           const customIcon = L.divIcon({
-            className: 'custom-div-icon',
+            className: `custom-div-icon ${brandClass}`,
             html: '<i class="fas fa-dumbbell"></i>',
             iconSize: [32, 32],
-            iconAnchor: [16, 16], // Wycentrowanie ikony
-            popupAnchor: [0, -16] // Dymek pojawia się nad ikoną
+            iconAnchor: [16, 16],
+            popupAnchor: [0, -16]
           });
 
           const marker = L.marker([gym.lat, gym.lon], { icon: customIcon })
             .addTo(mapInstance)
-            
-            // 2. Tooltip: Nazwa pojawia się po najechaniu myszką
             .bindTooltip(gym.name, {
-              permanent: true, 
+              permanent: false, // Dymek tylko po najechaniu
               direction: 'top',
               className: 'gym-tooltip',
               offset: [0, -20]
             })
-            
-            // 3. Popup: Pełne info po kliknięciu (Z oceną Google, BEZ ceny)
             .bindPopup(`
                 <div class="map-popup-title">${gym.name}</div>
                 <div>${gym.address}</div>
@@ -3562,7 +3815,10 @@ document.getElementById("report-close-success").addEventListener("click", closeR
                   </div>
                 ` : ''}
 
-                <a href="${gym.website}" target="_blank" class="map-popup-btn">Zobacz stronę</a>
+                <div style="display:flex; gap:5px; margin-top:10px;">
+                    ${gym.website ? `<a href="${gym.website}" target="_blank" class="map-popup-btn" style="flex:1; text-align:center;">Strona</a>` : ''}
+                    <a href="https://www.google.com/maps/dir/?api=1&destination=${gym.lat},${gym.lon}" target="_blank" class="map-popup-btn" style="flex:1; text-align:center; background:#4cc9f0; color:white;">Nawiguj</a>
+                </div>
             `);
             
           markersCluster.push(marker);
