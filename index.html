@@ -2270,6 +2270,180 @@
       }
     }
 
+
+/* Nowy styl przycisku w nagłówku */
+.quiz-btn-header {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 25px; /* Odstęp od statystyk */
+  background: white; /* Białe tło dla kontrastu na kolorowym nagłówku */
+  color: var(--primary); /* Niebieski tekst */
+  border: none;
+  padding: 14px 28px;
+  border-radius: 50px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.quiz-btn-header:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  background: #f8f9fa;
+}
+
+.quiz-btn-header i {
+  color: var(--secondary); /* Inny odcień dla ikony magicznej różdżki */
+}
+
+/* Delikatna animacja pulsowania */
+@keyframes pulse-header {
+  0% { transform: scale(1); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+  50% { transform: scale(1.03); box-shadow: 0 8px 25px rgba(0,0,0,0.25); }
+  100% { transform: scale(1); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+}
+
+/* Dostosowanie na telefonach */
+@media (max-width: 768px) {
+  .quiz-btn-header {
+    width: 100%; /* Na telefonie przycisk na całą szerokość */
+    padding: 12px 20px;
+    font-size: 0.95rem;
+  }
+}
+
+/* Modal tło */
+.quiz-modal-backdrop {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(26, 26, 46, 0.85);
+  backdrop-filter: blur(5px);
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.quiz-modal-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Modal zawartość */
+.quiz-modal-content {
+  background: white;
+  width: 90%;
+  max-width: 500px;
+  border-radius: 20px;
+  padding: 30px;
+  position: relative;
+  transform: translateY(20px);
+  transition: transform 0.3s;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+}
+
+/* --- POPRAWKA KOLORÓW DLA QUIZU --- */
+
+/* 1. Wymuszenie ciemnego koloru dla całego tekstu w modalu */
+.quiz-modal-content {
+  color: var(--dark) !important; /* Używa Twojej zmiennej #1a1a2e */
+}
+
+/* 2. Wymuszenie koloru nagłówków (pytań) */
+.quiz-header h3 {
+  color: #1a1a2e !important; 
+  font-weight: 700;
+}
+
+/* 3. Wymuszenie koloru tekstu w kafelkach z odpowiedziami */
+.quiz-option-card {
+  color: #1a1a2e !important;
+  font-weight: 600;
+}
+
+/* 4. Dodatkowe upewnienie się, że ikony w kółkach mają kolor */
+.icon-circle {
+  color: var(--primary) !important; /* Niebieski kolor ikon */
+}
+
+/* 5. Kolor ikony zamykania (X) */
+.quiz-close-btn {
+  color: #495057 !important; /* Ciemnoszary */
+}
+
+.quiz-close-btn:hover { color: #333; }
+
+/* Kroki quizu */
+.quiz-step { display: none; text-align: center; }
+.quiz-step.active { display: block; animation: fadeIn 0.4s; }
+
+.step-badge {
+  background: #e6ebfd;
+  color: #4361ee;
+  padding: 5px 12px;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.quiz-header h3 {
+  margin: 15px 0 25px;
+  font-size: 1.5rem;
+  color: #1a1a2e;
+}
+
+/* Opcje quizu */
+.quiz-options-grid {
+  display: grid;
+  gap: 15px;
+}
+
+.quiz-option-card {
+  border: 2px solid #f1f3f8;
+  border-radius: 12px;
+  padding: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  transition: all 0.2s;
+  text-align: left;
+}
+
+.quiz-option-card:hover {
+  border-color: #4361ee;
+  background: #f8f9fa;
+  transform: translateX(5px);
+}
+
+.icon-circle {
+  width: 40px;
+  height: 40px;
+  background: #e6ebfd;
+  color: #4361ee;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+
+.icon-circle.ms-color { background: rgba(0, 160, 225, 0.1); color: #00a0e1; }
+.icon-circle.mc-color { background: rgba(226, 0, 116, 0.1); color: #e20074; }
+
+@media (max-width: 768px) {
+  .quiz-btn-floating { bottom: 80px; right: 20px; font-size: 0.9rem; padding: 10px 18px; }
+}
+
   </style>
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -2407,6 +2581,11 @@
       <span id="multisport-count">0</span> z Multisport
     </div>
   </div>
+
+<button id="quiz-float-btn" class="quiz-btn-header">
+    <i class="fas fa-magic"></i> Wybierz siłownię w 3 krokach
+  </button>
+
 </div>
   </header>
   
@@ -2711,6 +2890,75 @@
       <p>&copy; 2025 GymMatch. <br> Wszelkie prawa zastrzeżone.</p>
     </div>
   </div>
+
+
+
+<div id="quiz-modal" class="quiz-modal-backdrop">
+  <div class="quiz-modal-content">
+    <button class="quiz-close-btn" onclick="closeQuiz()">×</button>
+    
+    <div id="quiz-step-1" class="quiz-step active">
+      <div class="quiz-header">
+        <span class="step-badge">Krok 1 z 3</span>
+        <h3>Na czym najbardziej Ci zależy?</h3>
+      </div>
+      <div class="quiz-options-grid">
+        <div class="quiz-option-card" onclick="nextQuizStep(1, 'price')">
+          <div class="icon-circle"><i class="fas fa-tag"></i></div>
+          <span>Niska cena</span>
+        </div>
+        <div class="quiz-option-card" onclick="nextQuizStep(1, 'quality')">
+          <div class="icon-circle"><i class="fas fa-star"></i></div>
+          <span>Wysoka jakość</span>
+        </div>
+        <div class="quiz-option-card" onclick="nextQuizStep(1, 'comfort')">
+          <div class="icon-circle"><i class="fas fa-spa"></i></div>
+          <span>Komfort / Udogodnienia</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="quiz-step-2" class="quiz-step">
+      <div class="quiz-header">
+        <span class="step-badge">Krok 2 z 3</span>
+        <h3>Czy posiadasz kartę sportową?</h3>
+      </div>
+      <div class="quiz-options-grid">
+        <div class="quiz-option-card" onclick="nextQuizStep(2, 'multisport')">
+          <div class="icon-circle ms-color"><i class="fas fa-id-card"></i></div>
+          <span>Mam Multisport</span>
+        </div>
+        <div class="quiz-option-card" onclick="nextQuizStep(2, 'medicover')">
+          <div class="icon-circle mc-color"><i class="fas fa-heartbeat"></i></div>
+          <span>Mam Medicover</span>
+        </div>
+        <div class="quiz-option-card" onclick="nextQuizStep(2, 'none')">
+          <div class="icon-circle"><i class="fas fa-wallet"></i></div>
+          <span>Nie mam -> Kupię karnet</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="quiz-step-3" class="quiz-step">
+      <div class="quiz-header">
+        <span class="step-badge">Krok 3 z 3</span>
+        <h3>W jakich godzinach planujesz ćwiczyć?</h3>
+      </div>
+      <div class="quiz-options-grid">
+        <div class="quiz-option-card" onclick="finishQuiz('24h')">
+          <div class="icon-circle"><i class="fas fa-moon"></i></div>
+          <span>W nocy (24h)</span>
+        </div>
+        <div class="quiz-option-card" onclick="finishQuiz('standard')">
+          <div class="icon-circle"><i class="fas fa-sun"></i></div>
+          <span>Dzień</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 </footer>
 
  <!-- Modal zgłaszania błędu -->
@@ -4198,6 +4446,117 @@ function updateMapMarkers() {
       });
     }
 
+// --- LOGIKA QUIZU ---
+
+const quizBackdrop = document.getElementById('quiz-modal');
+const quizFloatBtn = document.getElementById('quiz-float-btn');
+
+// Przechowywanie odpowiedzi
+let quizAnswers = {
+  priority: '',
+  card: '',
+  time: ''
+};
+
+// Otwieranie quizu
+if (quizFloatBtn) {
+  quizFloatBtn.addEventListener('click', () => {
+    quizBackdrop.classList.add('open');
+    showQuizStep(1); // Zawsze zaczynaj od 1 kroku
+  });
+}
+
+function closeQuiz() {
+  quizBackdrop.classList.remove('open');
+}
+
+// Obsługa kroków
+function showQuizStep(stepNumber) {
+  // Ukryj wszystkie kroki
+  document.querySelectorAll('.quiz-step').forEach(el => el.classList.remove('active'));
+  // Pokaż wybrany
+  document.getElementById('quiz-step-' + stepNumber).classList.add('active');
+}
+
+function nextQuizStep(currentStep, value) {
+  // Zapisz odpowiedź
+  if (currentStep === 1) quizAnswers.priority = value;
+  if (currentStep === 2) quizAnswers.card = value;
+  
+  // Przejdź dalej
+  showQuizStep(currentStep + 1);
+}
+
+// ZAKOŃCZENIE QUIZU - Aplikowanie filtrów
+function finishQuiz(timeValue) {
+  quizAnswers.time = timeValue;
+  closeQuiz();
+
+  // 1. Najpierw resetujemy wszystkie obecne filtry (symulacja kliknięcia RESET)
+  document.getElementById('reset-filters').click();
+
+  // Dajmy chwilę na reset, potem nakładamy nowe filtry
+  setTimeout(() => {
+    
+    // LOGIKA KROKU 1: Priorytet
+    if (quizAnswers.priority === 'price') {
+      // Ustaw sortowanie na cenę rosnąco
+      const sortSelect = document.getElementById('sort-select');
+      sortSelect.value = 'price_asc';
+      // Ręcznie wywołaj zdarzenie zmiany (żeby kod sortowania zadziałał)
+      sortSelect.dispatchEvent(new Event('change'));
+    
+    } else if (quizAnswers.priority === 'quality') {
+      // Sortowanie po ocenach
+      const sortSelect = document.getElementById('sort-select');
+      sortSelect.value = 'rating_desc';
+      sortSelect.dispatchEvent(new Event('change'));
+      
+      // I tylko dobre opinie
+      document.getElementById('filter-rating').value = '4.0';
+      
+    } else if (quizAnswers.priority === 'comfort') {
+      // Zaznacz Saunę
+      toggleFilterProgrammatically('filter-sauna', 'sauna', amenityFilters);
+      // Zaznacz FitBar (Machines)
+      toggleFilterProgrammatically('filter-machines', 'machines', amenityFilters);
+    }
+
+    // LOGIKA KROKU 2: Karty
+    if (quizAnswers.card === 'multisport') {
+      toggleFilterProgrammatically('filter-multisport', 'multisport', packageFilters);
+    } else if (quizAnswers.card === 'medicover') {
+      toggleFilterProgrammatically('filter-medicover', 'medicover', packageFilters);
+    }
+
+    // LOGIKA KROKU 3: Czas
+    if (quizAnswers.time === '24h') {
+      toggleFilterProgrammatically('filter-open24h', 'open24h', amenityFilters);
+    }
+
+    // Odśwież widok z nowymi filtrami
+    currentPage = 1;
+    renderGyms();
+
+    // Przewiń do wyników
+    document.getElementById('gym-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  }, 100); // Małe opóźnienie dla płynności
+}
+
+// Funkcja pomocnicza do "klikania" w filtry z poziomu kodu
+function toggleFilterProgrammatically(elementId, filterKey, filterObject) {
+  const element = document.getElementById(elementId);
+  if (element) {
+    // 1. Zmień stan w obiekcie filtrów (np. amenityFilters.sauna = true)
+    filterObject[filterKey] = true;
+    
+    // 2. Zmień wygląd (dodaj klasę checked do checkboxa)
+    // Uwaga: w Twoim kodzie checkbox to div wewnątrz elementu
+    const checkbox = element.querySelector('.package-checkbox') || element.querySelector('.amenity-checkbox');
+    if (checkbox) checkbox.classList.add('checked');
+  }
+}
 
   </script>
 </body>
