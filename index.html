@@ -1146,7 +1146,6 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      cursor: pointer;
     }
 
     .pricing-title i {
@@ -1731,7 +1730,7 @@
 
 /* Nowe style dla FAQ */
 .faq-section {
-  margin-top: 3rem;
+  margin-top: 1rem;
   text-align: left;
   max-width: 800px;
   width: 100%;
@@ -2979,12 +2978,6 @@
             </div>
           </div>
           <div class="faq-item">
-            <button class="faq-question">Czy korzystanie z GymMatch jest darmowe? <i class="fas fa-chevron-down"></i></button>
-            <div class="faq-answer">
-              <p>Tak, korzystanie z GymMatch jest całkowicie darmowe. Serwis powstał, aby ułatwić wybór odpowiedniej siłowni bez dodatkowych kosztów.</p>
-            </div>
-          </div>
-          <div class="faq-item">
             <button class="faq-question">Skąd pochodzą informacje o siłowniach i cennikach? <i class="fas fa-chevron-down"></i></button>
             <div class="faq-answer">
               <p>Dane pochodzą z oficjalnych stron siłowni, a także są aktualizowane na podstawie zgłoszeń użytkowników. Staramy się, aby informacje były zawsze możliwie najświeższe.</p>
@@ -3902,7 +3895,7 @@
             ` : ''}
 
             ${g.pricing && g.pricing.length > 0 ? `
-              <div class="gym-pricing" onclick="openPricingModal(${JSON.stringify(g.pricing).replace(/"/g, '&quot;')}, '${g.name.replace(/'/g, "\\'")}', '${(g.priceNote || '').replace(/'/g, "\\'")}')">
+              <div class="gym-pricing">
                 <div class="pricing-title">
                   <i class="fas fa-tag"></i>
                   <span>Ceny karnetów:</span>
