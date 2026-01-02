@@ -2444,6 +2444,117 @@
   .quiz-btn-floating { bottom: 80px; right: 20px; font-size: 0.9rem; padding: 10px 18px; }
 }
 
+/* Styl dla przycisku filtra studenckiego */
+.student-filter-btn {
+  background-color: #e0f2f1; /* Jasna mięta */
+  color: #009688; /* Ciemna mięta/turkus */
+  border: none;
+  padding: 12px 20px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 0.93rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;
+  margin-right: 10px;
+  border: 1px solid rgba(0, 150, 136, 0.2);
+}
+
+.student-filter-btn:hover {
+  background-color: #b2dfdb;
+  transform: translateY(-1px);
+}
+
+.student-filter-btn.active {
+  background-color: #009688;
+  color: white;
+  box-shadow: 0 4px 10px rgba(0, 150, 136, 0.3);
+}
+
+/* Styl dla wyróżnionej pozycji studenckiej */
+.pricing-item.student-deal {
+  background: #e0f2f1;
+  border: 1px solid #b2dfdb;
+  order: -1; /* Student zawsze na górze */
+  position: relative; /* Ważne dla tooltipa */
+}
+
+.pricing-item.student-deal .pricing-name {
+  color: #00796b;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+}
+
+.pricing-item.student-deal .pricing-price {
+  color: #00796b;
+  font-weight: 700;
+}
+
+/* --- STYL TOOLTIPA (DYMKA) --- */
+
+/* Ikonka informacyjna (i) */
+.student-info-icon {
+  color: #009688;
+  cursor: help;
+  font-size: 0.85rem;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+  display: flex; /* Centrowanie ikony */
+  align-items: center; 
+}
+
+.student-info-icon:hover {
+  opacity: 1;
+}
+
+/* Kontener tooltipa - ukryty domyślnie */
+.student-tooltip {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  bottom: 100%; /* Wyświetl nad elementem */
+  left: 50%;
+  transform: translateX(-50%); /* Wycentruj */
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 400;
+  white-space: normal; /* Pozwól na zawijanie tekstu */
+  width: max-content;
+  max-width: 200px; /* Nie szerszy niż 200px */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  z-index: 10;
+  transition: opacity 0.3s, transform 0.3s;
+  pointer-events: none; /* Żeby myszka nie "gubiła" hovera */
+  margin-bottom: 8px; /* Odstęp od ikonki */
+}
+
+/* Strzałka w dół od dymka */
+.student-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%; /* Na dole dymka */
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
+}
+
+/* Pokazywanie tooltipa po najechaniu na ikonkę LUB cały wiersz (opcjonalnie) */
+.student-info-wrapper:hover .student-tooltip {
+  visibility: visible;
+  opacity: 1;
+  transform: translateX(-50%) translateY(-5px); /* Lekki ruch do góry */
+}
+
   </style>
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -2736,6 +2847,10 @@
 
 <button id="fav-filter-btn" class="show-fav-btn" onclick="toggleFavFilter()">
   <i class="fas fa-heart"></i> Pokaż ulubione <span id="fav-count">(0)</span>
+</button>
+
+<button id="student-filter-btn" class="student-filter-btn" onclick="toggleStudentFilter()">
+  <i class="fas fa-user-graduate"></i> Oferty Studenckie
 </button>
 
 <button id="locate-list-btn" class="reset-btn" onclick="locateUser()" style="margin-right: 10px; background-color: var(--primary-lighter); color: var(--primary);">
@@ -3056,7 +3171,10 @@
       CENA_HALF_OPEN: 28,
       UWAGI_CENOWE: 35,
       LAT: 36,
-      LON: 37
+      LON: 37,
+      CENA_STUDENCKA: 38,
+      INFO_STUDENT: 39,
+      CSS_STUDENT: 40
     };
 
     // Domyślne zdjęcia
@@ -3070,6 +3188,7 @@
     // Zmienne globalne
     let favorites = JSON.parse(localStorage.getItem('gymFavorites')) || []; // Wczytaj z pamięci
     let showOnlyFavorites = false; // Czy filtr jest włączony
+    let showStudentOnly = false; // Nowa zmienna
     let userLocation = null; // Tutaj zapiszemy pozycję użytkownika
     let gyms = [];
     let currentPage = 1;
@@ -3160,7 +3279,22 @@
           if (c[COLUMN_MAP.CENA_ROCZNA]?.v) pricing.push({ name: "12-miesięczny", price: parseFloat(c[COLUMN_MAP.CENA_ROCZNA].v) });
           if (c[COLUMN_MAP.CENA_HALF_OPEN]?.v) pricing.push({ name: "Miesięczny (do 16:00)", price: parseFloat(c[COLUMN_MAP.CENA_HALF_OPEN].v) });
           if (c[COLUMN_MAP.CENA_JEDNORAZOWA]?.v) pricing.push({ name: "Wejściówka", price: parseFloat(c[COLUMN_MAP.CENA_JEDNORAZOWA].v) });
-
+          
+   // --- NOWE: Obsługa Ceny Studenckiej ---
+          let studentPrice = null;
+          // Sprawdzamy czy zdefiniowano index i czy jest wartość
+          if (COLUMN_MAP.CENA_STUDENCKA && c[COLUMN_MAP.CENA_STUDENCKA]?.v) {
+              studentPrice = parseFloat(c[COLUMN_MAP.CENA_STUDENCKA].v);
+              // Opcjonalnie info
+              const studentInfo = (COLUMN_MAP.INFO_STUDENT && c[COLUMN_MAP.INFO_STUDENT]?.v) ? c[COLUMN_MAP.INFO_STUDENT].v : "Zniżka studencka";
+              
+              pricing.push({ 
+                  name: "Student", 
+                  price: studentPrice, 
+                  note: studentInfo,
+                  isStudent: true 
+              });
+          }
           
           return {
             id: index,
@@ -3191,7 +3325,8 @@
             groupClasses: c[COLUMN_MAP.ZAJECIA_GRUPOWE]?.v === 'Tak' || false,
             jacuzzi: c[COLUMN_MAP.JACUZZI]?.v === 'Tak' || false,
             pricing: pricing,
-            priceNote: c[COLUMN_MAP.UWAGI_CENOWE]?.v || ''
+            priceNote: c[COLUMN_MAP.UWAGI_CENOWE]?.v || '',
+            studentPrice: studentPrice, // Przyda się do filtrowania
           };
         });
 
@@ -3328,6 +3463,9 @@
           if (!favorites.includes(g.id)) return false;
         }
 
+        if (showStudentOnly) {
+          if (!g.studentPrice) return false; // Ukryj jeśli nie ma ceny studenckiej
+        }
 
         return matchSearch && matchDistrict && matchType && matchTypeCheckbox && matchRating && matchPackages && matchAmenities;
       });
@@ -3766,8 +3904,21 @@
                 </div>
                 <div class="pricing-grid">
                   ${g.pricing.slice(0, 6).map(price => `
-                    <div class="pricing-item">
-                      <div class="pricing-name">${price.name}</div>
+                    <div class="pricing-item ${price.isStudent ? 'student-deal' : ''}">
+                      
+                      <div class="pricing-name">
+                        ${price.isStudent ? '<i class="fas fa-user-graduate"></i> ' : ''}
+                        
+                        ${price.name}
+
+                        ${price.isStudent && price.note ? `
+                          <div class="student-info-wrapper" style="display:inline-block; position:relative; margin-left:5px;">
+                            <i class="fas fa-info-circle student-info-icon"></i>
+                            <div class="student-tooltip">${price.note}</div>
+                          </div>
+                        ` : ''}
+                      </div>
+
                       <div class="pricing-price">${Number(price.price).toFixed(2)} zł</div>
                     </div>
                   `).join('')}
@@ -4557,6 +4708,25 @@ function toggleFilterProgrammatically(elementId, filterKey, filterObject) {
     if (checkbox) checkbox.classList.add('checked');
   }
 }
+
+function toggleStudentFilter() {
+  showStudentOnly = !showStudentOnly;
+  
+  const btn = document.getElementById('student-filter-btn');
+  if (btn) {
+    if (showStudentOnly) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
+  }
+  
+  currentPage = 1;
+  renderGyms();
+}
+
+// Dodaj do window, żeby HTML widział funkcję
+window.toggleStudentFilter = toggleStudentFilter;
 
   </script>
 </body>
